@@ -1,0 +1,78 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}{% endblock %}</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'css/global.css' %}">
+    <link rel='stylesheet' href='https://cdn-uicons.flaticon.com/2.3.0/uicons-bold-rounded/css/uicons-bold-rounded.css'>
+    {% block head %}
+    {% endblock %}
+</head>
+<body>
+    <div class="flex min-h-screen w-full items-stretch">
+        <header class="flex flex-col items-end flex-none w-[380px] relative">
+            <div class="flex flex-col h-full fixed top-0 left-0 py-10 w-[380px] border-r">
+                <div class="px-10">
+                    <a href="#" class="text-2xl text-[#223843] font-bold">Quipster</a>
+                </div>
+                <span class="block w-80 h-px mx-auto bg-gray-300 my-10"></span>
+                <nav class="flex flex-col h-full">
+                    <a href="#" class="py-3 px-10 hover:bg-gray-100">
+                        <div class="flex items-center">
+                            <i class="text-gray-300 fi fi-br-home"></i>
+                            <span class="ml-3 mt-1 text-[#223843] font-semibold">Home</span>
+                        </div>
+                    </a>
+                    <a href="#" class="py-3 px-10 hover:bg-gray-100">
+                        <div class="flex items-center">
+                            <i class="text-gray-300 fi fi-br-search"></i>
+                            <span class="ml-3 mt-1 text-[#223843] font-semibold">Explore</span>
+                        </div>
+                    </a>
+                    {% if user.is_authenticated %}
+                        <a href="{% url 'profile' %}" class="py-3 px-10 hover:bg-gray-100">
+                            <div class="flex items-center">
+                                <i class="text-gray-300 fi fi-br-user"></i>
+                                <span class="ml-3 mt-1 text-[#223843] font-semibold">Profile</span>
+                            </div>
+                        </a>
+                    {% endif %}
+                    <div class="flex flex-col mt-auto px-10 gap-3">
+                        {% if user.is_authenticated %}
+                            <a href="{% url 'logout' %}" class="flex items-center justify-center py-3 border-2 border-slate-700 bg-[#223843] rounded-lg text-white">
+                                <div class="flex items-center">
+                                    <span class="font-semibold">Logout</span>
+                                </div>
+                            </a>
+                        {% else %}
+                            <a href="{% url 'login' %}" class="flex items-center justify-center py-3 border-2 border-slate-700 bg-[#223843] rounded-lg text-white">
+                                <div class="flex items-center">
+                                    <span class="font-semibold">Login</span>
+                                </div>
+                            </a>
+                            <a href="{% url 'register' %}" class="flex items-center justify-center py-3 border-2 border-[#223843] text-[#223843] rounded-lg">
+                                <div class="flex items-center">
+                                    <span class="font-semibold">Register</span>
+                                </div>
+                            </a>
+                        {% endif %}
+                    </div>
+                </nav>
+            </div>
+        </header>
+        <main class="flex-1 grow">
+            {% block content %}
+            {% endblock %}
+        </main>
+    </div>
+    {% block scripts %}
+    {% endblock %}
+</body>
+</html>
