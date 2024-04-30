@@ -8,6 +8,9 @@ def register(request):
 def login(request):
     return render(request, 'users/login.html')
 
+def recover_account(request):
+    return render(request, 'users/recover-account.html')
+
 def logout(request):
     pass
     #return render(request, 'users/logout.html')
