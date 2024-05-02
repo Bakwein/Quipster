@@ -12,8 +12,8 @@ def recover_account(request):
     return render(request, 'users/recover-account.html')
 
 def logout(request):
-    pass
-    #return render(request, 'users/logout.html')
+    
+    return render(request, 'users/logout.html')
 
 def profile(request):
     pass
