@@ -1,0 +1,18 @@
+version: '3'
+
+services:
+  #db:
+
+  web:
+    build: .
+    command: bash -c " chmod +x ./docker_entrypoint.sh && ./docker_entrypoint.sh"
+    volumes:
+      - .:/code
+    ports:
+      - "8000:8000"
+    #depends_on:
+    #  - db
+    #    condition: service_healthy
+
+  
+#volumes:
