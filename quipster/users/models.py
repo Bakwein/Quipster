@@ -6,6 +6,9 @@ from django.contrib.auth.models import User
 class TwitterUser(models.Model):
     user= models.ForeignKey(User, on_delete=models.CASCADE)
     following = models.ManyToManyField(User, related_name='following')
+    profile_picture = models.ImageField(upload_to='profile_pictures/', null=True, blank=True)
+    banner_image = models.ImageField(upload_to='banner_images/', null=True, blank=True)
+    description = models.TextField(max_length=200, null=True, blank=True)
     
     def get_followings(self):
         return [user.username for user in self.following.all()]
@@ -15,4 +18,3 @@ class TwitterUser(models.Model):
 
     def __str__(self):
         return self.user.username
-    

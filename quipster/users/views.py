@@ -6,6 +6,7 @@ from django.core.handlers.wsgi import WSGIRequest
 
 from .models import TwitterUser
 from posts.models import Tweet
+from .forms import TwitterUserForm
 
 # Create your views here.
 
@@ -80,12 +81,51 @@ def profile(request: WSGIRequest):
     if request.user.is_authenticated is False:
         return redirect('login')
     
+    if request.method == "POST":
+        return edit_profile(request)
+    
     twitter_user = TwitterUser.objects.get(user=request.user)
     tweets = Tweet.objects.filter(user=request.user).order_by('-created_at')
 
+    form = TwitterUserForm(instance=twitter_user)
+
     context = {
         'twitter_user': twitter_user,
-        'tweets': tweets
+        'tweets': tweets,
+        'form': form
     }
 
     return render(request, 'users/profile.html', context)
+
+def edit_profile(request: WSGIRequest):
+    twitter_user = TwitterUser.objects.get(user=request.user)
+    user = request.user
+
+    data = {
+        'description': request.POST['description'] if 'description' in request.POST else twitter_user.description,
+    }
+
+    form = TwitterUserForm(data, request.FILES, instance=twitter_user)
+
+    if form.is_valid():
+        form.save()
+
+    full_name = request.POST.get('full-name', user.get_full_name()).split(' ')
+
+    username = request.POST.get('username', user.username)
+    first_name = full_name[0]
+    last_name = full_name[1]
+
+    if username != user.username:
+        if User.objects.filter(username=username).exists() is False:
+            user.username = username
+
+    if first_name != user.first_name:
+        user.first_name = first_name
+
+    if last_name != user.last_name:
+        user.last_name = last_name
+
+    user.save()
+    
+    return redirect('profile')
