@@ -11,18 +11,18 @@ from posts.models import Tweet
 
 def sign_in(request: WSGIRequest):
     if all(key in request.POST for key in ['username', 'password']) is False:
-        return render(request, 'users/login.html')
+        return render(request, 'users/login.html', {'error': 'Geçersiz parametre girildi', 'username': ''})
 
     username = request.POST['username']
     password = request.POST['password']
 
     if username == '' or password == '':
-        return render(request, 'users/login.html')
+        return render(request, 'users/login.html', {'error': 'Geçersiz kullanıcı adı veya şifre', 'username': username})
 
     user = authenticate(request, username=username, password=password)
 
     if user is None:
-        return render(request, 'users/login.html', {'error': 'Invalid username or password'})
+        return render(request, 'users/login.html', {'error': 'Geçersiz kullanıcı adı veya şifre', 'username': username})
     
     login(request, user)
 
