@@ -16,12 +16,14 @@
     {% endblock %}
 </head>
 <body>
-    <div class="flex min-h-screen w-full items-stretch">
-        {% include 'includes/navigation.html' %}
-        <main class="flex-1 grow">
-            {% block content %}
-            {% endblock %}
-        </main>
+    <div class="flex w-full min-h-screen">
+        <div class="flex items-stretch">
+            {% include 'includes/navigation.html' %}
+            <main class="">
+                {% block content %}
+                {% endblock %}
+            </main>
+        </div>
     </div>
     {% block scripts %}
     {% endblock %}

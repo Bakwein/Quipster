@@ -1,5 +1,7 @@
 {% extends "layout.html" %}
 
+{% load static %}
+
 {% block title %} Profile / Quipster {% endblock %}
 
 {% block head %}
@@ -8,6 +10,9 @@
             border-bottom: 1px solid #e5e7eb;
         }
     </style>
+    <script>
+        var csrfToken = "{{ csrf_token }}"
+    </script>
 {% endblock %}
 
 {% block content %}
@@ -132,12 +137,12 @@
                             </div>
                             <div class="text-gray-500">
                                 {% if user in tweet.likes.all %}
-                                    <button class="rounded-full flex items-center p-2.5 text-[#f91880] hover:bg-[#f7e0eb] relative">
+                                    <button data-operationid="like" data-tweetid="{{ tweet.id }}" class="rounded-full flex items-center p-2.5 text-[#f91880] hover:text-[#f91880] hover:bg-[#f7e0eb] relative">
                                         <i class="fi fi-br-heart"></i>
                                         <p class="text-[13px] absolute left-8">{{ tweet.get_likes }}</p>
                                     </button>
                                 {% else %}
-                                    <button class="rounded-full flex items-center p-2.5 hover:text-[#f91880] hover:bg-[#f7e0eb] relative">
+                                    <button data-operationid="like" data-tweetid="{{ tweet.id }}" class="rounded-full flex items-center p-2.5 hover:text-[#f91880] hover:bg-[#f7e0eb] relative">
                                         <i class="fi fi-br-heart"></i>
                                         <p class="text-[13px] absolute left-8">{{ tweet.get_likes }}</p>
                                     </button>
@@ -149,4 +154,7 @@
             {% endfor %}
         </div>
     </div>
+    {% block scripts %}
+        <script src="{% static 'scripts/tweet_operations.js' %}"></script>
+    {% endblock %}
 {% endblock %}
