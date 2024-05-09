@@ -27,7 +27,7 @@ def sign_in(request: WSGIRequest):
     
     login(request, user)
 
-    return redirect('index')
+    return redirect('posts:index')
 
 def sign_up(request: WSGIRequest):
     if all(key in request.POST for key in ['username', 'password', 'confirm-password', 'first-name', 'surname']) is False:
@@ -54,7 +54,7 @@ def sign_up(request: WSGIRequest):
     twitter_user = TwitterUser.objects.create(user=user)
     twitter_user.save()
 
-    return redirect('login')
+    return redirect('users:login')
 
 def render_register(request: WSGIRequest):
     if request.method == 'POST':
@@ -75,11 +75,11 @@ def recover_account(request: WSGIRequest):
 def render_logout(request: WSGIRequest):
     logout(request)
 
-    return redirect('login')
+    return redirect('users:login')
 
 def profile(request: WSGIRequest):
     if request.user.is_authenticated is False:
-        return redirect('login')
+        return redirect('users:login')
     
     if request.method == "POST":
         return edit_profile(request)
@@ -128,4 +128,4 @@ def edit_profile(request: WSGIRequest):
 
     user.save()
     
-    return redirect('profile')
+    return redirect('users:profile')

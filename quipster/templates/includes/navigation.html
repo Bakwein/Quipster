@@ -5,7 +5,7 @@
         </div>
         <nav class="flex flex-col gap-y-2 mt-2 h-full">
             <div>
-                <a href="{% url 'index' %}" class="inline-block rounded-3xl p-3 hover:bg-gray-100">
+                <a href="{% url 'posts:index' %}" class="inline-block rounded-3xl p-3 hover:bg-gray-100">
                     <div class="flex items-center">
                         <i class="text-2xl text-[#223843] fi fi-br-home"></i>
                         <span class="ml-5 mt-1 text-[#223843]">Ana sayfa</span>
@@ -22,7 +22,7 @@
             </div>
             {% if user.is_authenticated %}
             <div>
-                <a href="{% url 'profile' %}" class="inline-block rounded-3xl p-3 hover:bg-gray-100">
+                <a href="{% url 'users:profile' %}" class="inline-block rounded-3xl p-3 hover:bg-gray-100">
                     <div class="flex items-center">
                         <i class="text-2xl text-[#223843] fi fi-br-user"></i>
                         <span class="ml-5 mt-1 text-[#223843]">Profil</span>
@@ -32,18 +32,18 @@
             {% endif %}
             <div class="flex flex-col mt-auto pr-5 pb-3 gap-3 text-[17px]">
                 {% if user.is_authenticated %}
-                    <a href="{% url 'logout' %}" class="flex items-center justify-center py-3 border-2 border-[#1d9bf0] bg-[#1d9bf0] rounded-full text-white">
+                    <a href="{% url 'users:logout' %}" class="flex items-center justify-center py-3 border-2 border-[#1d9bf0] bg-[#1d9bf0] rounded-full text-white">
                         <div class="flex items-center">
                             <span class="font-bold">Çıkış yap</span>
                         </div>
                     </a>
                 {% else %}
-                    <a href="{% url 'login' %}" class="flex items-center justify-center py-3 border-2 border-slate-700 bg-[#223843] rounded-lg text-white">
+                    <a href="{% url 'users:login' %}" class="flex items-center justify-center py-3 border-2 border-slate-700 bg-[#223843] rounded-lg text-white">
                         <div class="flex items-center">
                             <span class="font-semibold">Giriş yap</span>
                         </div>
                     </a>
-                    <a href="{% url 'register' %}" class="flex items-center justify-center py-3 border-2 border-[#223843] text-[#223843] rounded-lg">
+                    <a href="{% url 'users:register' %}" class="flex items-center justify-center py-3 border-2 border-[#223843] text-[#223843] rounded-lg">
                         <div class="flex items-center">
                             <span class="font-semibold">Kayıt ol</span>
                         </div>
