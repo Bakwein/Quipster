@@ -1,5 +1,2 @@
-google oauth
-sifre regex kontrolü
-twitteruser database kontrolü
-
-TwitterUser'a bir banner, profil fotoğrafı ve açıklama alanı ekle
+sifre-email regex kontrolü
+dil cookie ayarlama
