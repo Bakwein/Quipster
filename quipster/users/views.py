@@ -3,6 +3,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 
 from django.core.handlers.wsgi import WSGIRequest
+from django.http import Http404
 
 from .models import TwitterUser
 from posts.models import Tweet
@@ -77,29 +78,34 @@ def render_logout(request: WSGIRequest):
 
     return redirect('users:login')
 
-def profile(request: WSGIRequest):
+def profile(request: WSGIRequest, username: str):
     if request.user.is_authenticated is False:
         return redirect('users:login')
     
     if request.method == "POST":
         return edit_profile(request)
     
-    twitter_user = TwitterUser.objects.get(user=request.user)
+    try:
+        user = User.objects.get(username=username)
+    except:
+        raise Http404("User does not exist")
+    
+    twitter_user = TwitterUser.objects.get(user=user)
     tweets = Tweet.objects.filter(user=request.user).order_by('-created_at')
-
-    form = TwitterUserForm(instance=twitter_user)
 
     context = {
         'twitter_user': twitter_user,
         'tweets': tweets,
-        'form': form
+        'username': username
     }
 
     return render(request, 'users/profile.html', context)
 
 def edit_profile(request: WSGIRequest):
-    twitter_user = TwitterUser.objects.get(user=request.user)
     user = request.user
+    twitter_user = TwitterUser.objects.get(user=user)
+
+    url = f"/users/profile/{user.username}"
 
     data = {
         'description': request.POST['description'] if 'description' in request.POST else twitter_user.description,
@@ -128,4 +134,4 @@ def edit_profile(request: WSGIRequest):
 
     user.save()
     
-    return redirect('users:profile')
+    return redirect(url)

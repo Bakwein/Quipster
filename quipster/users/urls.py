@@ -8,5 +8,5 @@ urlpatterns = [
     path('login/', render_login, name='login'),
     path('recover-account/', recover_account, name='recover-account'),
     path('logout/', render_logout, name='logout'),
-    path('profile/', profile, name='profile'),
+    path('profile/<str:username>', profile, name='profile'),
 ]

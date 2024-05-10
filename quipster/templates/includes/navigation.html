@@ -22,7 +22,7 @@
             </div>
             {% if user.is_authenticated %}
             <div>
-                <a href="{% url 'users:profile' %}" class="inline-block rounded-3xl p-3 hover:bg-gray-100">
+                <a href="{% url 'users:profile' user.username %}" class="inline-block rounded-3xl p-3 hover:bg-gray-100">
                     <div class="flex items-center">
                         <i class="text-2xl text-[#223843] fi fi-br-user"></i>
                         <span class="ml-5 mt-1 text-[#223843]">Profil</span>

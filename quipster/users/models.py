@@ -8,7 +8,7 @@ class TwitterUser(models.Model):
     following = models.ManyToManyField(User, related_name='following')
     profile_picture = models.ImageField(upload_to='profile_pictures/', null=True, blank=True)
     banner_image = models.ImageField(upload_to='banner_images/', null=True, blank=True)
-    description = models.TextField(max_length=200, null=True, blank=True)
+    description = models.TextField(max_length=200, blank=True, default="")
     
     def get_followings(self):
         return [user.username for user in self.following.all()]
