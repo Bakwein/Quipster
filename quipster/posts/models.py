@@ -26,5 +26,10 @@ class Tweet(models.Model):
     def is_comment(self):
         return self.replied_tweet != None
     
-    def get_tweets_count(self, user: TwitterUser):
-        return Tweet.objects.filter(user=user).count()
+    @classmethod
+    def get_tweets_count(cls, user: TwitterUser):
+        return cls.objects.filter(user=user).count()
+    
+    @classmethod
+    def get_latest_tweets(cls, user: TwitterUser, count: int = 5):
+        return cls.objects.filter(user=user).order_by('-created_at')[:count]

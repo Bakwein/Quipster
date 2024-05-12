@@ -4,5 +4,6 @@ from .views import *
 urlpatterns = [
     path('like', like, name='like'),
     path('follow', follow, name='follow'),
-    path('unfollow', unfollow, name='unfollow')
+    path('unfollow', unfollow, name='unfollow'),
+    path('post', post, name='post')
 ]

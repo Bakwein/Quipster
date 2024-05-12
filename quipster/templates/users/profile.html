@@ -1,7 +1,6 @@
 {% extends "layout.html" %}
 
 {% load static %}
-{% load extra_filters %}
 
 {% block title %} Profile / Quipster {% endblock %}
 
@@ -230,10 +229,8 @@
                                 </button>
                             </div>
                         </div>
-                        <div>
-                            <p class="text-slate-800">
-                                {{ tweet.content|linebreaksbr }}
-                            </p>
+                        <div class="text-slate-800">
+                            {{ tweet.content|safe }}
                         </div>
                         <div class="flex items-center justify-between mt-2 w-2/3 -translate-x-2.5">
                             <div class="text-gray-500">
