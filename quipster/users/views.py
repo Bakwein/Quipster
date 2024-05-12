@@ -136,3 +136,5 @@ def edit_profile(request: WSGIRequest):
     user.save()
     
     return redirect(url)
+def click_view(request):
+    return render(request, 'users/click.html')

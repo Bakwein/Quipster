@@ -141,6 +141,13 @@
                                 <button data-modal-open="crud-modal" class="flex px-5 py-2.5 transition-colors rounded-3xl border hover:bg-gray-100 mt-3 text-sm font-bold">
                                     Profili düzenle
                                 </button>
+                                     <!-- click Butonun eklendiği kısım başlangıcı -->
+                        <div class="ml-4 mt-auto">
+                            <a href="{% url 'users_profile_click' %}" class="px-3 py-1.5 transition-colors rounded-full border border-gray-300 hover:bg-gray-100 text-sm font-bold">
+                                Doğrula
+                            </a>
+                        </div>
+            <!-- click Butonun eklendiği kısım sonu -->
                             {% elif user.username in twitter_user.get_followers %}
                                 <button id="follow-button" data-operationid="unfollow" data-uid="{{ twitter_user.user.id }}" class="unfollow transition-colors flex items-center justify-center w-32 py-2.5 transition-colors rounded-3xl border mt-3 text-sm font-bold">
                                     
