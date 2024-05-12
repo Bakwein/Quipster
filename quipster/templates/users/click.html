@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kullanıcı Girişi</title>
+  <style>
+    body {
+      background-color: gray;
+      color: white;
+      font-family: Arial, sans-serif;
+    }
+
+    form {
+      margin: 50px auto;
+      width: 350px;
+      padding: 20px;
+      border: 1px solid #ccc;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 5px;
+    }
+
+    input[type="text"],
+    input[type="password"] {
+      width: 100%;
+      padding: 8px;
+      border: 1px solid #ccc;
+      box-sizing: border-box;
+    }
+
+    .tik1 {
+      appearance: none;
+      width: 20px;
+      height: 20px;
+      border: 1px solid #ccc;
+      border-radius: 50%;
+      background-color: #007bff; /* Mavi */
+    }
+
+    .tik1:checked {
+      background-color: #0056b3; /* Daha koyu mavi */
+    }
+
+    .tik2 {
+      appearance: none;
+      width: 20px;
+      height: 20px;
+      border: 1px solid #ccc;
+      border-radius: 50%;
+      background-color: #333; /* Siyah */
+    }
+
+    .tik2:checked {
+      background-color: #292929; /* Daha koyu siyah */
+    }
+
+    .tik3 {
+      appearance: none;
+      width: 20px;
+      height: 20px;
+      border: 1px solid #ccc;
+      border-radius: 50%;
+      background-color: #dc3545; /* Kırmızı */
+    }
+
+    .tik3:checked {
+      background-color: #c82333; /* Daha koyu kırmızı */
+    }
+
+    input[type="checkbox"] {
+      margin-right: 5px;
+    }
+
+    button {
+      margin-top: 10px;
+      padding: 8px 15px;
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <h1>REAL ACCOUNT</h1>
+
+  <form action="#">
+    <label for="kullaniciAdi">Kullanıcı Adı:</label>
+    <input type="text" id="kullaniciAdi" name="kullaniciAdi" required>
+
+    <label for="sifre">Şifre:</label>
+    <input type="password" id="sifre" name="sifre" required>
+
+    <div>
+      <input type="checkbox" class="tik1" id="tik1" name="tik[]">
+      <label for="tik1">public</label>
+
+      <input type="checkbox" class="tik2" id="tik2" name="tik[]">
+      <label for="tik2">infulencer</label>
+
+      <input type="checkbox" class="tik3" id="tik3" name="tik[]">
+      <label for="tik3">politican</label>
+    </div>
+
+    <button type="submit">SET</button>
+  </form>
+
+  <script>
+    // Tıklanma durumuna göre çerez oluşturma ve renk değişikliği
+    function handleCheckboxChange(checkbox, color) {
+        checkbox.addEventListener('change', () => {
+            if (checkbox.checked) {
+                document.cookie = `${checkbox.id}_checked=true; expires=Sat, 31 Dec 2025 12:00:00 UTC; path=/`;
+                checkbox.parentNode.querySelector('label').style.color = color;
+            } else {
+                document.cookie = `${checkbox.id}_checked=false; expires=Sat, 31 Dec 2025 12:00:00 UTC; path=/`;
+                checkbox.parentNode.querySelector('label').style.color = 'black';
+            }
+        });
+    }
+
+    const tik1 = document.getElementById('tik1');
+    const tik2 = document.getElementById('tik2');
+    const tik3 = document.getElementById('tik3');
+
+    handleCheckboxChange(tik1, 'blue');
+    handleCheckboxChange(tik2, 'white');
+    handleCheckboxChange(tik3, 'red');
+
+    // Sayfa yüklendiğinde çerezlerin kontrolü
+    window.onload = function() {
+        var tik1Checked = getCookie("tik1_checked");
+        if (tik1Checked == "true") {
+            tik1.checked = true;
+            tik1.parentNode.querySelector('label').style.color = 'blue';
+        }
+
+        var tik2Checked = getCookie("tik2_checked");
+        if (tik2Checked == "true") {
+            tik2.checked = true;
+            tik2.parentNode.querySelector('label').style.color = 'white';
+        }
+
+        var tik3Checked = getCookie("tik3_checked");
+        if (tik3Checked == "true") {
+            tik3.checked = true;
+            tik3.parentNode.querySelector('label').style.color = 'red';
+        }
+    };
+
+    // Belirli bir çerezin değerini alma fonksiyonu
+    function getCookie(name) {
+        var nameEQ = name + "=";
+        var ca = document.cookie.split(';');
+        for (var i = 0; i < ca.length; i++) {
+            var c = ca[i];
+            while (c.charAt(0) == ' ') c = c.substring(1, c.length);
+            if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length, c.length);
+        }
+        return null;
+    }
+  </script>
+</body>
+</html>
