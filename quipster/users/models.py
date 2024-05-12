@@ -5,7 +5,7 @@ from django.contrib.auth.models import User
 
 class TwitterUser(models.Model):
     user= models.ForeignKey(User, on_delete=models.CASCADE)
-    following = models.ManyToManyField(User, related_name='following')
+    following = models.ManyToManyField(User, related_name='following', blank=True)
     profile_picture = models.ImageField(upload_to='profile_pictures/', null=True, blank=True)
     banner_image = models.ImageField(upload_to='banner_images/', null=True, blank=True)
     description = models.TextField(max_length=200, blank=True, default="")

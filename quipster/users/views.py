@@ -91,7 +91,7 @@ def profile(request: WSGIRequest, username: str):
         raise Http404("User does not exist")
     
     twitter_user = TwitterUser.objects.get(user=user)
-    tweets = Tweet.objects.filter(user=request.user).order_by('-created_at')
+    tweets = Tweet.objects.filter(user=twitter_user).order_by('-created_at')
 
     context = {
         'twitter_user': twitter_user,
@@ -116,20 +116,21 @@ def edit_profile(request: WSGIRequest):
     if form.is_valid():
         form.save()
 
-    full_name = request.POST.get('full-name', user.get_full_name()).split(' ')
+    full_name = request.POST.get('full-name', "").split(' ')
 
     username = request.POST.get('username', user.username)
+    
     first_name = full_name[0]
-    last_name = full_name[1]
+    last_name = full_name[1] if len(full_name) > 1 else ""
 
     if username != user.username:
         if User.objects.filter(username=username).exists() is False:
             user.username = username
 
-    if first_name != user.first_name:
+    if first_name != user.first_name or first_name != "":
         user.first_name = first_name
 
-    if last_name != user.last_name:
+    if last_name != user.last_name or last_name != "":
         user.last_name = last_name
 
     user.save()

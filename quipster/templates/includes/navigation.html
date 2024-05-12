@@ -1,31 +1,45 @@
+{% load static %}
+
 <header class="flex flex-col items-end flex-none w-[571px] relative">
     <div class="flex flex-col h-full fixed top-0 py-1 text-xl w-[271px] border-r">
         <div>
-            <a href="#" class="inline-block rounded-3xl p-3 text-2xl text-[#223843] font-bold hover:bg-gray-100">Quipster</a>
+            <a href="{% url 'posts:index' %}" class="inline-block py-3">
+                <img width="58" src="{% static 'images/quipster_logo.png' %}" alt="">
+            </a>
         </div>
         <nav class="flex flex-col gap-y-2 mt-2 h-full">
             <div>
-                <a href="{% url 'posts:index' %}" class="inline-block rounded-3xl p-3 hover:bg-gray-100">
+                <a href="{% url 'posts:index' %}" class="inline-block rounded-full p-3 hover:bg-gray-100">
                     <div class="flex items-center">
-                        <i class="text-2xl text-[#223843] fi fi-br-home"></i>
-                        <span class="ml-5 mt-1 text-[#223843]">Ana sayfa</span>
+                        {% if request.resolver_match.url_name == 'index' %}
+                            <i class="text-2xl text-[#223843] fi fi-sr-home"></i>
+                            <span class="ml-5 mt-1 text-[#223843] font-bold">Home</span>
+                        {% else %}
+                            <i class="text-2xl text-[#223843] fi fi-br-home"></i>
+                            <span class="ml-5 mt-1 text-[#223843]">Home</span>
+                        {% endif %}
                     </div>
                 </a>
             </div>
             <div>
-                <a href="#" class="inline-block rounded-3xl p-3 hover:bg-gray-100">
+                <a href="#" class="inline-block rounded-full p-3 hover:bg-gray-100">
                     <div class="flex items-center">
                         <i class="text-2xl text-[#223843] fi fi-br-search"></i>
-                        <span class="ml-5 mt-1 text-[#223843]">Keşfet</span>
+                        <span class="ml-5 mt-1 text-[#223843]">Explore</span>
                     </div>
                 </a>
             </div>
             {% if user.is_authenticated %}
             <div>
-                <a href="{% url 'users:profile' user.username %}" class="inline-block rounded-3xl p-3 hover:bg-gray-100">
+                <a href="{% url 'users:profile' user.username %}" class="inline-block rounded-full p-3 hover:bg-gray-100">
                     <div class="flex items-center">
-                        <i class="text-2xl text-[#223843] fi fi-br-user"></i>
-                        <span class="ml-5 mt-1 text-[#223843]">Profil</span>
+                        {% if request.resolver_match.url_name == 'profile' %}
+                            <i class="text-2xl text-[#223843] fi fi-sr-user"></i>
+                            <span class="ml-5 mt-1 text-[#223843] font-bold">Profile</span>
+                        {% else %}
+                            <i class="text-2xl text-[#223843] fi fi-br-user"></i>
+                            <span class="ml-5 mt-1 text-[#223843]">Profile</span>
+                        {% endif %}
                     </div>
                 </a>
             </div>

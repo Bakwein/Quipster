@@ -1,20 +1,34 @@
-from django.shortcuts import render, redirect
-from .models import TwitterUser, User
-from django.core.handlers.wsgi import WSGIRequest
-#request
 import requests
-from django.contrib.auth import login, authenticate
 
+from django.shortcuts import render, redirect
+from .models import TwitterUser
+from django.core.handlers.wsgi import WSGIRequest
+from django.contrib.auth import login, authenticate
+from django.contrib.auth.models import User
+from posts.models import Tweet
 
 # Create your views here.
 
 def index(request: WSGIRequest):
     if request.user.is_authenticated is False:
         return redirect("users:login")
-    twitter_user = TwitterUser.objects.get(user=request.user)
-
-    return render(request, 'pages/index.html', {'twitter_user': twitter_user})
     
+    twitter_user = TwitterUser.objects.get(user=request.user)
+    all_tweets = []
+
+    all_tweets.extend(Tweet.get_latest_tweets(user=twitter_user))
+
+    for user in twitter_user.following.all():
+        tw_user = TwitterUser.objects.get(user=user)
+        tweets = Tweet.get_latest_tweets(user=tw_user)
+
+        all_tweets.extend(tweets)
+
+    all_tweets = sorted(all_tweets, key=lambda x: x.created_at, reverse=True)
+
+    print(all_tweets)
+
+    return render(request, 'pages/index.html', {'twitter_user': twitter_user, "tweets": all_tweets})
 
 def oauth_login(request: WSGIRequest):
     google_user_info = request.user.social_auth.get(provider='google-oauth2').extra_data

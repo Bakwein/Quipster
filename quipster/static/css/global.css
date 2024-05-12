@@ -3,7 +3,7 @@ body {
     font-optical-sizing: auto;
 }
 
-i {
+.fi {
     display: flex;
     align-items: center;
     justify-content: center;
