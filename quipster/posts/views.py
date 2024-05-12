@@ -1,10 +1,10 @@
 from django.shortcuts import render, redirect
-from .models import TwitterUser, User
+from .models import TwitterUser
 from django.core.handlers.wsgi import WSGIRequest
 #request
 import requests
 from django.contrib.auth import login, authenticate
-
+from django.contrib.auth.models import User
 
 # Create your views here.
 

@@ -2,19 +2,42 @@
 
 {% block title %} Quipster {% endblock %}
 
+{% block head %}
+    <style>
+        .active-btn {
+            font-weight: bolder !important;
+            color: rgb(38 38 38) !important;
+        }
+        .active-btn div {
+            border-color: rgb(59 130 246);
+        }
+    </style>
+{% endblock %}
+
 {% block content %}
-    <div class="w-full p-10">
-        <div class="w-full flex items-center">
-            <div>
-                <h2 class="text-2xl text-[#223843] font-bold">Feeds</h2>
+    <div class="w-full max-w-3xl min-h-screen border-r">
+        <div class="flex items-center">
+            <div class="flex-1">
+                <button class="active-btn flex items-center justify-center w-full h-[53px] text-[#536471] font-medium transition-colors hover:bg-gray-100">
+                    <div class="flex items-center justify-center w-fit h-full border-b-4 border-transparent">
+                        For you
+                    </div>
+                </button>
             </div>
-            <div class="ml-auto flex items-center">
-                <button aria-selected="true" type="button" class="px-4 py-2 text-sm font-medium text-gray-900 bg-white aria-selected:bg-indigo-500 aria-selected:text-white rounded-s-lg hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-700 dark:bg-gray-800 dark:border-gray-700 dark:text-white dark:hover:text-white dark:hover:bg-gray-700 dark:focus:ring-blue-500 dark:focus:text-white">
-                    Popüler
+            <div class="flex-1">
+                <button class="w-full h-[53px] text-[#536471] font-medium transition-colors hover:bg-gray-100">
+                    Following
                 </button>
-                <button aria-selected="false" type="button" class="px-4 py-2 text-sm font-medium text-gray-900 bg-white rounded-e-lg hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-700 dark:bg-gray-800 dark:border-gray-700 dark:text-white dark:hover:text-white dark:hover:bg-gray-700 dark:focus:ring-blue-500 dark:focus:text-white">
-                    Latest
-                </button>
+            </div>
+        </div>
+        <div class="flex w-full h-32 p-5 border-t">
+            <div class="flex-none w-10">
+                <div class="w-10 h-10 rounded-full">
+                    <img class="w-full h-full object-cover rounded-full" src="https://pbs.twimg.com/profile_images/1561295006190665730/MoF9_wRm_400x400.jpg" alt="">
+                </div>
+            </div>
+            <div class="flex-1">
+
             </div>
         </div>
     </div>

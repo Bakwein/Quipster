@@ -23,11 +23,13 @@ def like(request: WSGIRequest):
         return JsonResponse({'status': 'error', 'message': 'Tweet not found'}, status=404)
     
     is_liked = False
+    
+    sender_user = TwitterUser.objects.get(user=request.user)
 
-    if request.user in tweet.likes.all():
-        tweet.likes.remove(request.user)
+    if sender_user in tweet.likes.all():
+        tweet.likes.remove(sender_user)
     else:
-        tweet.likes.add(request.user)
+        tweet.likes.add(sender_user)
         is_liked = True
 
     return JsonResponse({'status': 'success', 'is_liked': is_liked, 'like_count': tweet.likes.count()}, status=200)
