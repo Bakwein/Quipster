@@ -1,8 +1,5 @@
 from django.contrib import admin
 from .models import Tweet
-from tinymce.widgets import TinyMCE
-
-from django.db import models
 
 # Register your models here.
 
@@ -22,11 +19,7 @@ class IsCommentFilter(admin.SimpleListFilter):
         elif self.value() == 'no':
             return queryset.filter(parent__isnull=True)
 
-class TweetAdmin(admin.ModelAdmin):
-    formfield_overrides = {
-        models.TextField: {'widget': TinyMCE()}
-    }
-    
+class TweetAdmin(admin.ModelAdmin):    
     list_display = ('user', 'get_likes', 'get_comments_count', 'is_comment', 'created_at')
     list_filter = ("user", "created_at", IsCommentFilter, "updated_at", "replied_tweet")
     search_fields = ['content']

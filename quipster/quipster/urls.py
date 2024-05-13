@@ -26,7 +26,6 @@ urlpatterns = [
     path('api/', include("api.urls")),
     #oauth
     path('oauth/', include('social_django.urls', namespace='social')),
-    path('tinymce/',include('tinymce.urls')),
 ]
 
 if settings.DEBUG:
