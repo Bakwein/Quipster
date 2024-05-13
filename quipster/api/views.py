@@ -10,6 +10,9 @@ from django.views.decorators.http import require_http_methods
 import json
 import re
 
+from django.utils.safestring import mark_safe
+from django.utils.html import escape
+
 # Create your views here.
 
 @require_http_methods(["POST"])
@@ -89,7 +92,9 @@ def post(request: WSGIRequest):
         data = json.loads(request.body)
 
         content: str = data["content"]
-
+        
+        content = escape(content)
+        
         content = content.replace("\n", "<br>")
         content = re.sub(r'\*(.*?)\*', r'<strong>\1</strong>', content)
         content = re.sub(r'\_(.*?)\_', r'<i>\1</i>', content)

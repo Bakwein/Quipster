@@ -7,6 +7,8 @@ from django.contrib.auth import login, authenticate
 from django.contrib.auth.models import User
 from posts.models import Tweet
 
+import secrets
+
 # Create your views here.
 
 def index(request: WSGIRequest):
@@ -36,16 +38,18 @@ def oauth_login(request: WSGIRequest):
     response =  requests.get('https://www.googleapis.com/oauth2/v1/userinfo', headers={'Authorization': f'Bearer {google_user_info["access_token"]}'})
     if response.status_code != 200:
         return redirect('users:login')
+    
     data = response.json()
-    username = data['given_name'] + '_' + data['family_name']
+
+    given_name = data['given_name']
+    family_name = data['family_name'] if "family_name" in data else ""
+
+    username = given_name + secrets.token_hex(5)
     
     existed_user = User.objects.filter(username=username).first()
 
     if existed_user is None:
-        firstname = response.json()['given_name']
-        lastname = response.json()['family_name']
-
-        user = User.objects.create_user(username=username, first_name=firstname, last_name=lastname)
+        user = User.objects.create_user(username=username, first_name=given_name, last_name=family_name)
         user.save()
 
         twitter_user = TwitterUser.objects.create(user=user)
