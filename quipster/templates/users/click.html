@@ -1,167 +1,254 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="tr">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Kullanıcı Girişi</title>
+  <title>Kullanıcı Dil Bilgisi</title>
   <style>
-    body {
-      background-color: gray;
-      color: white;
-      font-family: Arial, sans-serif;
+    .selected {
+      background-color: lightgray; /* Tıklanan satırın arka planını gri yaparım */
     }
-
-    form {
-      margin: 50px auto;
-      width: 350px;
-      padding: 20px;
-      border: 1px solid #ccc;
+    .custom-table {
+      width: 100%; /* Tabloyu yatayda tam genişlik yaptım*/
+      border-collapse: collapse; 
+  }
+  tr {
+    background-color: #f5f5f5; /* Açık gri */
+  }
+  .custom-table th, .custom-table td {
+      border: 2px solid transparent;
+      border-radius: 50px; 
+      padding: 10px; 
+  }
+  
+  .custom-table th {
+      background-color:#888888
+      font-weight: bold;
+  }
+    #userLanguage {
+      font-size: 12px; 
+      font-weight: bold; 
+      font-style: italic; 
+      text-transform: uppercase; 
     }
-
-    label {
-      display: block;
-      margin-bottom: 5px;
-    }
-
-    input[type="text"],
-    input[type="password"] {
-      width: 100%;
-      padding: 8px;
-      border: 1px solid #ccc;
-      box-sizing: border-box;
-    }
-
-    .tik1 {
-      appearance: none;
-      width: 20px;
-      height: 20px;
-      border: 1px solid #ccc;
-      border-radius: 50%;
-      background-color: #007bff; /* Mavi */
-    }
-
-    .tik1:checked {
-      background-color: #0056b3; /* Daha koyu mavi */
-    }
-
-    .tik2 {
-      appearance: none;
-      width: 20px;
-      height: 20px;
-      border: 1px solid #ccc;
-      border-radius: 50%;
-      background-color: #333; /* Siyah */
-    }
-
-    .tik2:checked {
-      background-color: #292929; /* Daha koyu siyah */
-    }
-
-    .tik3 {
-      appearance: none;
-      width: 20px;
-      height: 20px;
-      border: 1px solid #ccc;
-      border-radius: 50%;
-      background-color: #dc3545; /* Kırmızı */
-    }
-
-    .tik3:checked {
-      background-color: #c82333; /* Daha koyu kırmızı */
-    }
-
-    input[type="checkbox"] {
-      margin-right: 5px;
-    }
-
+    /* Butonları tam daire yapmak için stil */
     button {
-      margin-top: 10px;
-      padding: 8px 15px;
-      background-color: #4CAF50;
-      color: white;
-      border: none;
-      cursor: pointer;
+      border-radius: 50%; 
+      width: 30px; 
+      height: 30px; 
+      margin: 10px;
+      border: none; 
     }
+    /* Renk 1 butonunun arka plan rengi */
+    #renk1Button {
+      background-color: #ff0000; /* Kırmızı */
+    }
+    /* Renk 2 butonunun arka plan rengi */
+    #renk2Button {
+      background-color: #00ff00; /* Yeşil */
+    }
+    /* Renk 3 butonunun arka plan rengi */
+#renk3Button {
+  background-color: #0000ff; /* Mavi */
+}
+
+/* Renk 4 butonunun arka plan rengi */
+#renk4Button {
+  background-color: #ffff00; /* Sarı */
+}
+
+/* Renk 5 butonunun arka plan rengi */
+#renk5Button {
+  background-color: #ff00ff; /* Magenta */
+}
+
+    /* Butonlardaki metni gizleme*/
+    button span {
+      display: none;
+    } 
   </style>
 </head>
 <body>
-  <h1>REAL ACCOUNT</h1>
 
-  <form action="#">
-    <label for="kullaniciAdi">Kullanıcı Adı:</label>
-    <input type="text" id="kullaniciAdi" name="kullaniciAdi" required>
 
-    <label for="sifre">Şifre:</label>
-    <input type="password" id="sifre" name="sifre" required>
+  <p> TERCİH ETTİĞİNİZ DİL: <span id="userLanguage"></span></p>
 
-    <div>
-      <input type="checkbox" class="tik1" id="tik1" name="tik[]">
-      <label for="tik1">public</label>
+  <table border="2" class="custom-table">
+    <caption> TERCİH EDEBİLECEĞİNİZ DİL ŞEÇENEKLERİ</caption>
+    <thead>
+      <tr>
+        <th>Dil Kodu</th>
+        <th>Dil Adı</th>
+      </tr>
+    </thead>
+    <tbody id="languageTable">
+  
+    </tbody>
+  </table>
+  <h6>ARKA PLAN RENGİNİ DEĞİŞTİR</h6>
+ <!-- Butonlar için bir konteyner -->
 
-      <input type="checkbox" class="tik2" id="tik2" name="tik[]">
-      <label for="tik2">infulencer</label>
+ <div id="renkSecimleri">
+  <button id="renk1Button"><span>#ff0000</span></button>
+  <button id="renk2Button"><span>#00ff00</span></button>
+  <button id="renk3Button"><span>#0000ff</span></button>
+  <button id="renk4Button"><span>#ffff00</span></button>
+  <button id="renk5Button"><span>#ff00ff</span></button>
+</div>
 
-      <input type="checkbox" class="tik3" id="tik3" name="tik[]">
-      <label for="tik3">politican</label>
-    </div>
 
-    <button type="submit">SET</button>
-  </form>
 
-  <script>
-    // Tıklanma durumuna göre çerez oluşturma ve renk değişikliği
-    function handleCheckboxChange(checkbox, color) {
-        checkbox.addEventListener('change', () => {
-            if (checkbox.checked) {
-                document.cookie = `${checkbox.id}_checked=true; expires=Sat, 31 Dec 2025 12:00:00 UTC; path=/`;
-                checkbox.parentNode.querySelector('label').style.color = color;
-            } else {
-                document.cookie = `${checkbox.id}_checked=false; expires=Sat, 31 Dec 2025 12:00:00 UTC; path=/`;
-                checkbox.parentNode.querySelector('label').style.color = 'black';
-            }
-        });
+  <script >
+   // Tarayıcının tercih ettiği dil bilgisini alma kısmını burada yaptım
+var userLanguage = getCookie("user_language") || navigator.language || navigator.userLanguage;
+
+// Dil bilgisini ekrana yazdırma
+document.getElementById("userLanguage").textContent = userLanguage;
+
+// Dil bilgisini çerezden al (eğer mevcutsa) fonksiyonu
+function getCookie(name) {
+  var cookieValue = null;
+  if (document.cookie && document.cookie !== '') {
+    var cookies = document.cookie.split(';');
+    for (var i = 0; i < cookies.length; i++) {
+      var cookie = cookies[i].trim();
+      if (cookie.substring(0, name.length + 1) === (name + '=')) {
+        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+        break;
+      }
     }
+  }
+  return cookieValue;
+}
 
-    const tik1 = document.getElementById('tik1');
-    const tik2 = document.getElementById('tik2');
-    const tik3 = document.getElementById('tik3');
+// Tarayıcının desteklediği dillerin listesi
+var supportedLanguages = [
+  { code: "en", name: "English" },
+  { code: "fr", name: "French" },
+  { code: "de", name: "German" },
+  { code: "tr", name: "Turkish" },
+];
 
-    handleCheckboxChange(tik1, 'blue');
-    handleCheckboxChange(tik2, 'white');
-    handleCheckboxChange(tik3, 'red');
+// Dil seçeneklerini tabloya ekle
+var languageTable = document.getElementById("languageTable");
+supportedLanguages.forEach(function(language) {
+  var row = languageTable.insertRow();
+  var cell1 = row.insertCell(0);
+  var cell2 = row.insertCell(1);
+  cell1.textContent = language.code;
+  cell2.textContent = language.name;
 
-    // Sayfa yüklendiğinde çerezlerin kontrolü
-    window.onload = function() {
-        var tik1Checked = getCookie("tik1_checked");
-        if (tik1Checked == "true") {
-            tik1.checked = true;
-            tik1.parentNode.querySelector('label').style.color = 'blue';
-        }
-
-        var tik2Checked = getCookie("tik2_checked");
-        if (tik2Checked == "true") {
-            tik2.checked = true;
-            tik2.parentNode.querySelector('label').style.color = 'white';
-        }
-
-        var tik3Checked = getCookie("tik3_checked");
-        if (tik3Checked == "true") {
-            tik3.checked = true;
-            tik3.parentNode.querySelector('label').style.color = 'red';
-        }
-    };
-
-    // Belirli bir çerezin değerini alma fonksiyonu
-    function getCookie(name) {
-        var nameEQ = name + "=";
-        var ca = document.cookie.split(';');
-        for (var i = 0; i < ca.length; i++) {
-            var c = ca[i];
-            while (c.charAt(0) == ' ') c = c.substring(1, c.length);
-            if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length, c.length);
-        }
-        return null;
+  // Dil seçeneklerine tıklama olayı ekleme
+  row.addEventListener("click", function() {
+    // Seçili satırı vurgula
+    var rows = languageTable.getElementsByTagName("tr");
+    for (var i = 0; i < rows.length; i++) {
+      rows[i].classList.remove("selected");
     }
+    row.classList.add("selected");
+
+    // Seçilen dili çerezde saklama
+    document.cookie = "user_language=" + language.code + "; expires=Sat, 31 Dec 2025 12:00:00 UTC; path=/";
+  });
+});
+ 
+//oop mantığını uygulama
+// Renk sınıfını oluşturma
+class Renk {
+  constructor(renkKodu) {
+    this.renkKodu = renkKodu;
+  }
+   // Arka plan rengini değiştiren metod
+   renkDegistir() {
+    document.body.style.backgroundColor = this.renkKodu;
+  }
+ // Buton tıklandığında renk bilgisini saklama
+ sakla() {
+  document.cookie = "bodyColor=" + this.renkKodu + "; expires=Sat, 31 Dec 2025 12:00:00 UTC; path=/";
+}
+}
+ // Renk1 sınıfını Renk sınıfından türet
+ class Renk1 extends Renk {
+  constructor(renkKodu) {
+    super(renkKodu);
+  }
+}
+// Renk2 sınıfını Renk sınıfından türet
+class Renk2 extends Renk {
+  constructor(renkKodu) {
+    super(renkKodu);
+  }
+}
+// Renk3 sınıfını Renk sınıfından türet
+class Renk3 extends Renk {
+  constructor(renkKodu) {
+    super(renkKodu);
+  }
+}
+
+// Renk4 sınıfını Renk sınıfından türet
+class Renk4 extends Renk {
+  constructor(renkKodu) {
+    super(renkKodu);
+  }
+}
+
+// Renk5 sınıfını Renk sınıfından türet
+class Renk5 extends Renk {
+  constructor(renkKodu) {
+    super(renkKodu);
+  }
+}
+ // Butonları seçme kısmı
+ const renk1Button = document.getElementById("renk1Button");
+ const renk2Button = document.getElementById("renk2Button");
+ const renk3Button = document.getElementById("renk3Button");
+ const renk4Button = document.getElementById("renk4Button");
+ const renk5Button = document.getElementById("renk5Button");
+ 
+ // Butonlara tıklama olayları
+ renk1Button.addEventListener("click", function() {
+   const renk1Nesne = new Renk1("#ff0000"); // Kırmızı
+   renk1Nesne.renkDegistir();
+   renk1Nesne.sakla(); // Renk bilgisini sakla
+ });
+
+ renk2Button.addEventListener("click", function() {
+   const renk2Nesne = new Renk2("#00ff00"); // Yeşil
+   renk2Nesne.renkDegistir();
+   renk2Nesne.sakla(); // Renk bilgisini sakla
+ });
+ 
+renk3Button.addEventListener("click", function() {
+  const renk3Nesne = new Renk3("#0000ff"); // Mavi
+  renk3Nesne.renkDegistir();
+  renk3Nesne.sakla(); // Renk bilgisini sakla
+});
+
+renk4Button.addEventListener("click", function() {
+  const renk4Nesne = new Renk4("#ffff00"); // Sarı
+  renk4Nesne.renkDegistir();
+  renk4Nesne.sakla(); // Renk bilgisini sakla
+});
+
+renk5Button.addEventListener("click", function() {
+  const renk5Nesne = new Renk5("#ff00ff"); // Magenta
+  renk5Nesne.renkDegistir();
+  renk5Nesne.sakla(); // Renk bilgisini sakla
+});
+
+
+// Sayfa yüklendiğinde body rengini kontrol etme ve (eğer bir cookie varsa ona göre ayarladım yoksa kendi renği)
+window.onload = function() {
+  var bodyColorCookie = getCookie("bodyColor");
+  if (bodyColorCookie) {
+    document.body.style.backgroundColor = bodyColorCookie;
+  }
+};
+
+
+
   </script>
 </body>
 </html>
