@@ -30,9 +30,12 @@ def index(request: WSGIRequest):
 
     all_tweets = sorted(all_tweets, key=lambda x: x.created_at, reverse=True)
 
-    language = request.COOKIES["user_language"]
+    if "user_language" in request.COOKIES:
+        language = request.COOKIES["user_language"]
 
-    if language not in ["tr", "en", "de"]:
+        if language not in ["tr", "en", "de"]:
+            language = "en"
+    else:
         language = "en"
 
     language_context = context[language]
