@@ -48,18 +48,18 @@
                 {% if user.is_authenticated %}
                     <a href="{% url 'users:logout' %}" class="flex items-center justify-center py-3 border-2 border-[#1d9bf0] bg-[#1d9bf0] rounded-full text-white">
                         <div class="flex items-center">
-                            <span class="font-bold">Çıkış yap</span>
+                            <span class="font-bold">Logout</span>
                         </div>
                     </a>
                 {% else %}
                     <a href="{% url 'users:login' %}" class="flex items-center justify-center py-3 border-2 border-slate-700 bg-[#223843] rounded-lg text-white">
                         <div class="flex items-center">
-                            <span class="font-semibold">Giriş yap</span>
+                            <span class="font-semibold">Login</span>
                         </div>
                     </a>
                     <a href="{% url 'users:register' %}" class="flex items-center justify-center py-3 border-2 border-[#223843] text-[#223843] rounded-lg">
                         <div class="flex items-center">
-                            <span class="font-semibold">Kayıt ol</span>
+                            <span class="font-semibold">Register</span>
                         </div>
                     </a>
                 {% endif %}
