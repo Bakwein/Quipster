@@ -60,6 +60,24 @@ MIDDLEWARE = [
     'social_django.middleware.SocialAuthExceptionMiddleware',
 ]
 
+SECURE_CONTENT_TYPE_NOSNIFF = True #Protects against MIME type sniffing attacks by enabling the header X-Content-Type-Options: nosniff.
+SECURE_BROWSER_XSS_FILTER = True #Enables the XSS (Cross-Site Scripting) filter built into most recent web browsers.
+#SECURE_HSTS_SECONDS = 31536000 #Enables the HTTP Strict Transport Security (HSTS) header with the specified number of seconds.
+X_FRAME_OPTIONS = 'DENY' #Prevents clickjacking attacks by ensuring that their content is not embedded into other sites.
+
+
+#Cookies
+SESSION_COOKIE_SECURE = True #Marks the cookie as secure, meaning it will only be sent over HTTPS.
+CSRF_COOKIE_SECURE = True #Marks the CSRF cookie as secure, meaning it will only be sent over HTTPS.
+#SESSION_EXPIRE_AT_BROWSER_CLOSE = True #Expires the session when the user closes their browser.
+SESSION_COOKIE_HTTPONLY = True #Marks the cookie as HTTP-only, meaning that the cookie cannot be accessed by JavaScript.
+
+
+
+SECURE_SSL_REDIRECT = True #Redirects all non-HTTPS requests to HTTPS.
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https') #A tuple representing a HTTP header/value combination that signifies a request is secure.
+
+
 ROOT_URLCONF = 'quipster.urls'
 
 TEMPLATES = [
@@ -101,15 +119,19 @@ DATABASES = {
 
 AUTH_PASSWORD_VALIDATORS = [
     {
+        # Checks the similarity between the password and a set of attributes of the user.
         'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
     },
     {
+        # Checks whether the password meets a minimum length.
         'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
     },
     {
+        # Checks whether the password occurs in a list of common passwords
         'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
     },
     {
+         # Checks whether the password isn’t entirely numeric
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
