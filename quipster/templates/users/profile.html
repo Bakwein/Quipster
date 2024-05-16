@@ -110,7 +110,7 @@
         <div>
             <div class="flex items-center px-5 py-1">
                 <div>
-                    <button class="p-2.5 transition-colors rounded-full hover:bg-gray-100">
+                    <button onclick="window.history.back()" class="p-2.5 transition-colors rounded-full hover:bg-gray-100">
                         <i class="fi fi-br-arrow-left"></i>
                     </button>
                 </div>
@@ -136,18 +136,18 @@
                                 <img class="w-full h-full object-cover rounded-full bg-slate-50 p-5" src="{% static 'images/user_logo.png' %}" alt="">
                             {% endif %}
                         </div>
-                        <div class="ml-auto">
+                        <div class="flex items-center ml-auto">
                             {% if user.username == username %}
-                                <button data-modal-open="crud-modal" class="flex px-5 py-2.5 transition-colors rounded-3xl border hover:bg-gray-100 mt-3 text-sm font-bold">
-                                    Profili düzenle
-                                </button>
-                                     <!-- click Butonun eklendiği kısım başlangıcı -->
-                        <div class="ml-4 mt-auto"style="margin-top: 10px;">
-                            <a href="{% url 'users:users_profile_click' %}" class="px-3 py-1.5 transition-colors rounded-full border border-gray-300 hover:bg-gray-100 text-sm font-bold">
-                                Ayarlar
-                            </a>
-                        </div>
-            <!-- click Butonun eklendiği kısım sonu -->
+                                <div>
+                                    <button data-modal-open="crud-modal" class="flex items-center px-5 h-10 transition-colors rounded-3xl border hover:bg-gray-100 text-sm font-bold">
+                                        Profili düzenle
+                                    </button>
+                                </div>
+                                <div class="ml-3">
+                                    <a href="{% url 'users:users_profile_click' %}" class="flex items-center justify-center w-10 h-10 transition-colors rounded-full border border-gray-300 hover:bg-gray-100 text-sm font-bold">
+                                        <i class="fi fi-br-settings"></i>
+                                    </a>
+                                </div>
                             {% elif user.username in twitter_user.get_followers %}
                                 <button id="follow-button" data-operationid="unfollow" data-uid="{{ twitter_user.user.id }}" class="unfollow transition-colors flex items-center justify-center w-32 py-2.5 transition-colors rounded-3xl border mt-3 text-sm font-bold">
                                     

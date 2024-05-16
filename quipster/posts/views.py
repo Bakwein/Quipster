@@ -9,14 +9,14 @@ from posts.models import Tweet
 import requests
 import secrets
 
+from django.contrib.auth.decorators import login_required
+
 from .langs import context
 
 # Create your views here.
 
-def index(request: WSGIRequest):
-    if request.user.is_authenticated is False:
-        return redirect("users:login")
-    
+@login_required(redirect_field_name="index", login_url="login")
+def index(request: WSGIRequest): 
     twitter_user = TwitterUser.objects.get(user=request.user)
     all_tweets = []
 
@@ -45,6 +45,18 @@ def index(request: WSGIRequest):
         "tweets": all_tweets,
         "context": language_context
     })
+
+@login_required(redirect_field_name="post-details", login_url="login")
+def post_details(request: WSGIRequest, tweet_id: int):
+    twitter_user = TwitterUser.objects.get(user=request.user)
+
+    try:
+        tweet = Tweet.objects.get(id=tweet_id)
+        comments = Tweet.objects.filter(replied_tweet=tweet).order_by('-created_at')
+    except:
+        return redirect("posts:index")
+
+    return render(request, "pages/post-details.html", { "twitter_user": twitter_user, "tweet": tweet, "comments": comments })
 
 def oauth_login(request: WSGIRequest):
     google_user_info = request.user.social_auth.get(provider='google-oauth2').extra_data
