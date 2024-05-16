@@ -62,8 +62,15 @@ MIDDLEWARE = [
 
 SECURE_CONTENT_TYPE_NOSNIFF = True #Protects against MIME type sniffing attacks by enabling the header X-Content-Type-Options: nosniff.
 SECURE_BROWSER_XSS_FILTER = True #Enables the XSS (Cross-Site Scripting) filter built into most recent web browsers.
-#SECURE_HSTS_SECONDS = 31536000 #Enables the HTTP Strict Transport Security (HSTS) header with the specified number of seconds.
+
+'''
+SECURE_HSTS_SECONDS = 86400 #Enables the HTTP Strict Transport Security (HSTS) header with the specified number of seconds.
+SECURE_HSTS_PRELOAD = True #Enables the HSTS preload list, which is a list of sites that are hardcoded into the browser as being HTTPS only.
+SECURE_HSTS_INCLUDE_SUBDOMAINS = True #Includes all subdomains of the site in the HSTS policy.
+'''
+
 X_FRAME_OPTIONS = 'DENY' #Prevents clickjacking attacks by ensuring that their content is not embedded into other sites.
+X_CONTENT_TYPE_OPTIONS = 'nosniff' #Prevents MIME type sniffing attacks by ensuring that the MIME type of the response matches the Content-Type header.
 
 
 #Cookies
