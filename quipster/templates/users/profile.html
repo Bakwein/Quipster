@@ -107,18 +107,18 @@
         </div>
     {% endif %}
     <div class="w-full max-w-3xl min-h-screen border-r">
-        <div>
-            <div class="flex items-center px-5 py-1">
-                <div>
-                    <button onclick="window.history.back()" class="p-2.5 transition-colors rounded-full hover:bg-gray-100">
-                        <i class="fi fi-br-arrow-left"></i>
-                    </button>
-                </div>
-                <div class="flex flex-col ml-5">
-                    <h1 class="text-xl font-bold">{{ user.get_full_name }}</h1>
-                    <p class="text-[13px] text-gray-500">{{ twitter_user }} Gönderi</p>
-                </div>
+        <div class="flex items-center w-full sticky top-0 bg-white/85 z-50 px-5 py-1" style="backdrop-filter: blur(12px);">
+            <div class="">
+                <button onclick="window.history.back()" class="p-2.5 transition-colors rounded-full hover:bg-gray-100">
+                    <i class="fi fi-br-arrow-left"></i>
+                </button>
             </div>
+            <div class="flex flex-col ml-5">
+                <h1 class="text-xl font-bold">{{ user.get_full_name }}</h1>
+                <p class="text-[13px] text-gray-500">{{ twitter_user }} Gönderi</p>
+            </div>
+        </div>
+        <div>
             <div class="w-full">
                 <div class="relative">
                     <div class="bg-neutral-200 h-56">
