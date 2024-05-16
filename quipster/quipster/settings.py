@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     'posts',
     'api',
     'social_django',
+    'sslserver',
 ]
 
 MIDDLEWARE = [
