@@ -12,5 +12,13 @@ context = {
         'write_post' : 'Gönderi paylaş',
         'post_button': 'Paylaş',
         'search': 'Ara'
-    }
+    },'de': {
+    'for_you': 'Für dich',
+    'followings': 'Gefolgte',
+    'write_post': 'Beitrag verfassen',
+    'post_button': 'Veröffentlichen',
+    'search': 'Suche'
+}
+
+
 }

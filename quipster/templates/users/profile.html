@@ -41,11 +41,11 @@
                         </button>
                     </div>
                     <div class="ml-10">
-                        <h1 class="text-xl font-bold text-slate-800">Profili düzenle</h1>
+                        <h1 class="text-xl font-bold text-slate-800">{{context2.edit_profile}}</h1>
                     </div>
                     <div class="ml-auto">
                         <button type="submit" data-modal-target="crud-modal" data-modal-save="crud-modal" class="px-5 py-2 rounded-full text-sm bg-[#1d9bf0] text-white font-bold hover:opacity-80">
-                            Kaydet
+                            {{context2.save}}
                         </button>
                     </div>
                 </div>
@@ -88,18 +88,18 @@
                 <div class="flex flex-col px-2">
                     <div class="w-full p-2 overflow-hidden">
                         <label for="username" class="block mb-2 text-sm font-medium text-gray-800 dark:text-white">
-                            Kullanıcı adı
+                            {{context2.username}}
                         </label>
                         <input class="w-full text-sm rounded" type="text" name="username" id="username" value="{{ user.username }}">
                     </div>
                     <div class="w-full p-2 overflow-hidden">
                         <label for="full-name" class="block mb-2 text-sm font-medium text-gray-800 dark:text-white">
-                            İsim
+                            {{context2.name}}
                         </label>
                         <input class="w-full text-sm rounded" type="text" name="full-name" id="full-name" value="{{ user.get_full_name }}">
                     </div>
                     <div class="flex flex-col w-full p-2 overflow-hidden">
-                        <label for="description" class="block mb-2 text-sm font-medium text-gray-800 dark:text-white">Açıklama</label>
+                        <label for="description" class="block mb-2 text-sm font-medium text-gray-800 dark:text-white">{{context2.Description}}</label>
                         <textarea id="description" name="description" rows="5" class="block p-2.5 w-full text-sm text-slate-800 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Write your thoughts here...">{{ twitter_user.description }}</textarea>
                     </div>
                 </div>
@@ -116,7 +116,7 @@
                 </div>
                 <div class="flex flex-col ml-5">
                     <h1 class="text-xl font-bold">{{ user.get_full_name }}</h1>
-                    <p class="text-[13px] text-gray-500">{{ twitter_user }} Gönderi</p>
+                    <p class="text-[13px] text-gray-500">{{ twitter_user }} {{context2.post}}</p>
                 </div>
             </div>
             <div class="w-full">
@@ -139,12 +139,12 @@
                         <div class="ml-auto">
                             {% if user.username == username %}
                                 <button data-modal-open="crud-modal" class="flex px-5 py-2.5 transition-colors rounded-3xl border hover:bg-gray-100 mt-3 text-sm font-bold">
-                                    Profili düzenle
+                                   {{context2.edit_profile}}
                                 </button>
                                      <!-- click Butonun eklendiği kısım başlangıcı -->
                         <div class="ml-4 mt-auto"style="margin-top: 10px;">
                             <a href="{% url 'users:users_profile_click' %}" class="px-3 py-1.5 transition-colors rounded-full border border-gray-300 hover:bg-gray-100 text-sm font-bold">
-                                Ayarlar
+                             {{context2.setting}}
                             </a>
                         </div>
             <!-- click Butonun eklendiği kısım sonu -->
@@ -154,7 +154,7 @@
                                 </button>
                             {% elif user.username not in twitter_user.get_followers %}
                                 <button id="follow-button" data-operationid="follow" data-uid="{{ twitter_user.user.id }}" class="follow flex transition-colors items-center justify-center w-32 py-2.5 transition-colors rounded-3xl border mt-3 text-sm font-bold">
-                                    Takip et
+                                    {{context2.follow}}
                                 </button>
                             {% endif %}
                         </div>
@@ -175,7 +175,7 @@
                     </div>
                     <div class="ml-2">
                         <p class="text-[15px] mt-0.5">
-                            {{ user.date_joined|date:"F Y" }} tarihinde katıldı
+                            {{ user.date_joined|date:"F Y" }} {{context2.join_date}}
                         </p>
                     </div>
                 </div>
@@ -185,11 +185,11 @@
                     <div class="flex items-center text-sm">
                         <div class="flex items-center gap-x-1 mr-5">
                             <p class="text-slate-800 font-bold">{{ twitter_user.get_followings|length }}</p>
-                            <p class="text-gray-500">Takip edilen</p>
+                            <p class="text-gray-500">{{context2.following}}</p>
                         </div>
                         <div class="flex items-center gap-x-1 mr-5">
                             <p id="followers-count" class="text-slate-800 font-bold">{{ twitter_user.get_followers|length }}</p>
-                            <p class="text-gray-500">Takipçiler</p>
+                            <p class="text-gray-500">{{context2.followers}}</p>
                         </div>
                     </div>
                 </div>
@@ -198,17 +198,17 @@
         <div class="flex items-center mt-5">
             <div class="px-3 transition-colors hover:bg-gray-200">
                 <div aria-selected="true" class="border-b-4 border-transparent aria-selected:border-blue-500">
-                    <button aria-selected="true" class="text-gray-500 aria-selected:text-slate-800 text-sm font-bold px-5 py-3">Gönderiler</button>
+                    <button aria-selected="true" class="text-gray-500 aria-selected:text-slate-800 text-sm font-bold px-5 py-3">{{context2.posts}}</button>
                 </div>
             </div>
             <div class="px-3 transition-colors hover:bg-gray-200">
                 <div aria-selected="false" class="border-b-4 border-transparent aria-selected:border-blue-500">
-                    <button aria-selected="false" class="text-gray-500 aria-selected:text-slate-800 text-sm font-bold px-5 py-3">Yanıtlar</button>
+                    <button aria-selected="false" class="text-gray-500 aria-selected:text-slate-800 text-sm font-bold px-5 py-3">{{context2.replies}}</button>
                 </div>
             </div>
             <div class="px-3 transition-colors hover:bg-gray-200">
                 <div aria-selected="false" class="border-b-4 border-transparent aria-selected:border-blue-500">
-                    <button aria-selected="false" class="text-gray-500 aria-selected:text-slate-800 text-sm font-bold px-5 py-3">Beğeni</button>
+                    <button aria-selected="false" class="text-gray-500 aria-selected:text-slate-800 text-sm font-bold px-5 py-3">{{context2.like}}</button>
                 </div>
             </div>
         </div>

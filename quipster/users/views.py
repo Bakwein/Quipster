@@ -8,31 +8,59 @@ from django.http import Http404
 from .models import TwitterUser
 from posts.models import Tweet
 from .forms import TwitterUserForm
-
+from .langs import context2
 # Create your views here.
 
 def sign_in(request: WSGIRequest):
+    #cookie
+    if "user_language" in request.COOKIES:
+        language = request.COOKIES["user_language"]
+
+        if language not in ["tr", "en", "de"]:
+            language = "en"
+    else:
+        language = "en"
+
+    language_context = context2[language]
+
+
+
+
+
+
+
     if all(key in request.POST for key in ['username', 'password']) is False:
-        return render(request, 'users/login.html', {'error': 'Geçersiz parametre girildi', 'username': ''})
+        return render(request, 'users/login.html', {'error': 'Geçersiz parametre girildi', 'username': '',"context": language_context})
 
     username = request.POST['username']
     password = request.POST['password']
 
     if username == '' or password == '':
-        return render(request, 'users/login.html', {'error': 'Geçersiz kullanıcı adı veya şifre', 'username': username})
+        return render(request, 'users/login.html', {'error': 'Geçersiz kullanıcı adı veya şifre', 'username': username,"context": language_context})
 
     user = authenticate(request, username=username, password=password)
 
     if user is None:
-        return render(request, 'users/login.html', {'error': 'Geçersiz kullanıcı adı veya şifre', 'username': username})
+        return render(request, 'users/login.html', {'error': 'Geçersiz kullanıcı adı veya şifre', 'username': username,"context": language_context})
     
     login(request, user)
 
     return redirect('posts:index')
 
 def sign_up(request: WSGIRequest):
+    #cookie
+    if "user_language" in request.COOKIES:
+        language = request.COOKIES["user_language"]
+
+        if language not in ["tr", "en", "de"]:
+            language = "en"
+    else:
+        language = "en"
+
+    language_context = context2[language]
+
     if all(key in request.POST for key in ['username', 'password', 'confirm-password', 'first-name', 'surname']) is False:
-        return render(request, 'users/register.html')
+        return render(request, 'users/register.html',{"context": language_context})
     
     username = request.POST['username']
     password = request.POST['password']
@@ -41,13 +69,13 @@ def sign_up(request: WSGIRequest):
     repassword = request.POST['confirm-password']
 
     if username == '' or password == '' or first_name == '' or surname == '' or repassword == '':
-        return render(request, 'users/register.html')
+        return render(request, 'users/register.html',{"context": language_context})
 
     if password != repassword:
-        return render(request, 'users/register.html', {'error': 'Passwords do not match'})
+        return render(request, 'users/register.html', {'error': 'Passwords do not match',"context": language_context})
     
     if User.objects.filter(username=username).exists():
-        return render(request, 'users/register.html', {'error': 'Username already exists'})
+        return render(request, 'users/register.html', {'error': 'Username already exists',"context": language_context})
     
     user = User.objects.create_user(username=username, password=password, first_name=first_name, last_name=surname)
     user.save()
@@ -58,20 +86,61 @@ def sign_up(request: WSGIRequest):
     return redirect('users:login')
 
 def render_register(request: WSGIRequest):
+     #cookie
+    if "user_language" in request.COOKIES:
+        language = request.COOKIES["user_language"]
+
+        if language not in ["tr", "en", "de"]:
+            language = "en"
+    else:
+        language = "en"
+
+    language_context = context2[language]
+    
     if request.method == 'POST':
         return sign_up(request)
 
 
-    return render(request, 'users/register.html')
+    return render(request, 'users/register.html',{"context": language_context})
 
 def render_login(request: WSGIRequest):
+    #cookie
+    if "user_language" in request.COOKIES:
+        language = request.COOKIES["user_language"]
+
+        if language not in ["tr", "en", "de"]:
+            language = "en"
+    else:
+        language = "en"
+
+    language_context = context2[language]
+
+
+
+
+
+
     if request.method == 'POST':
         return sign_in(request)
 
-    return render(request, 'users/login.html')
+    return render(request, 'users/login.html',{"context": language_context})
 
 def recover_account(request: WSGIRequest):
-    return render(request, 'users/recover-account.html')
+    #cookie
+    if "user_language" in request.COOKIES:
+        language = request.COOKIES["user_language"]
+
+        if language not in ["tr", "en", "de"]:
+            language = "en"
+    else:
+        language = "en"
+
+    language_context = context2[language]
+
+
+
+
+    return render(request, 'users/recover-account.html',{"context": language_context})
 
 def render_logout(request: WSGIRequest):
     logout(request)
@@ -79,6 +148,22 @@ def render_logout(request: WSGIRequest):
     return redirect('users:login')
 
 def profile(request: WSGIRequest, username: str):
+    
+    #cookie
+    if "user_language" in request.COOKIES:
+        language = request.COOKIES["user_language"]
+
+        if language not in ["tr", "en", "de"]:
+            language = "en"
+    else:
+        language = "en"
+
+    language_context = context2[language]
+
+    
+    
+    
+    
     if request.user.is_authenticated is False:
         return redirect('users:login')
     
@@ -92,14 +177,15 @@ def profile(request: WSGIRequest, username: str):
     
     twitter_user = TwitterUser.objects.get(user=user)
     tweets = Tweet.objects.filter(user=twitter_user).order_by('-created_at')
-
     context = {
         'twitter_user': twitter_user,
         'tweets': tweets,
-        'username': username
+        'username': username,
+        "context2": language_context
     }
+  
 
-    return render(request, 'users/profile.html', context)
+    return render(request, 'users/profile.html', context) 
 
 def edit_profile(request: WSGIRequest):
     user = request.user
@@ -138,3 +224,4 @@ def edit_profile(request: WSGIRequest):
     return redirect(url)
 def click_view(request):
     return render(request, 'users/click.html')
+
