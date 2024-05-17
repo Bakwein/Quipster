@@ -23,12 +23,6 @@ def sign_in(request: WSGIRequest):
 
     language_context = context2[language]
 
-
-
-
-
-
-
     if all(key in request.POST for key in ['username', 'password']) is False:
         return render(request, 'users/login.html', {'error': 'Geçersiz parametre girildi', 'username': '',"context": language_context})
 
@@ -100,7 +94,6 @@ def render_register(request: WSGIRequest):
     if request.method == 'POST':
         return sign_up(request)
 
-
     return render(request, 'users/register.html',{"context": language_context})
 
 def render_login(request: WSGIRequest):
@@ -114,11 +107,6 @@ def render_login(request: WSGIRequest):
         language = "en"
 
     language_context = context2[language]
-
-
-
-
-
 
     if request.method == 'POST':
         return sign_in(request)
@@ -136,9 +124,6 @@ def recover_account(request: WSGIRequest):
         language = "en"
 
     language_context = context2[language]
-
-
-
 
     return render(request, 'users/recover-account.html',{"context": language_context})
 
@@ -160,10 +145,6 @@ def profile(request: WSGIRequest, username: str):
 
     language_context = context2[language]
 
-    
-    
-    
-    
     if request.user.is_authenticated is False:
         return redirect('users:login')
     
@@ -177,13 +158,16 @@ def profile(request: WSGIRequest, username: str):
     
     twitter_user = TwitterUser.objects.get(user=user)
     tweets = Tweet.objects.filter(user=twitter_user).order_by('-created_at')
+
+    tweet_count = Tweet.get_tweets_count(user=twitter_user)
+
     context = {
         'twitter_user': twitter_user,
         'tweets': tweets,
         'username': username,
-        "context2": language_context
+        "context2": language_context,
+        'tweet_count': tweet_count
     }
-  
 
     return render(request, 'users/profile.html', context) 
 
@@ -224,4 +208,3 @@ def edit_profile(request: WSGIRequest):
     return redirect(url)
 def click_view(request):
     return render(request, 'users/click.html')
-
