@@ -15,7 +15,7 @@ from .langs import context
 
 # Create your views here.
 
-@login_required(redirect_field_name="index", login_url="login")
+@login_required(redirect_field_name="next", login_url="users:login")
 def index(request: WSGIRequest): 
     twitter_user = TwitterUser.objects.get(user=request.user)
     all_tweets = []
@@ -43,10 +43,10 @@ def index(request: WSGIRequest):
     return render(request, 'pages/index.html', {
         "twitter_user": twitter_user,
         "tweets": all_tweets,
-        "context": language_context
+        "context2": language_context
     })
 
-@login_required(redirect_field_name="post-details", login_url="login")
+@login_required(redirect_field_name="next", login_url="users:login")
 def post_details(request: WSGIRequest, tweet_id: int):
     twitter_user = TwitterUser.objects.get(user=request.user)
 
@@ -55,8 +55,18 @@ def post_details(request: WSGIRequest, tweet_id: int):
         comments = Tweet.objects.filter(replied_tweet=tweet).order_by('-created_at')
     except:
         return redirect("posts:index")
+    
+    if "user_language" in request.COOKIES:
+        language = request.COOKIES["user_language"]
 
-    return render(request, "pages/post-details.html", { "twitter_user": twitter_user, "tweet": tweet, "comments": comments })
+        if language not in ["tr", "en", "de"]:
+            language = "en"
+    else:
+        language = "en"
+
+    language_context = context[language]
+
+    return render(request, "pages/post-details.html", { "twitter_user": twitter_user, "tweet": tweet, "comments": comments, "context2": language_context })
 
 def oauth_login(request: WSGIRequest):
     google_user_info = request.user.social_auth.get(provider='google-oauth2').extra_data

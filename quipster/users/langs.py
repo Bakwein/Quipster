@@ -48,10 +48,12 @@ context2 = {
         'term1' : 'I accept the',
         'term2' : 'Terms and Conditions',
         'sign_up': 'Sign Up',
-
-
-
-
+        
+        #layout
+        "home": "Home",
+        "explore": "Explore",
+        "profile": "Profile",
+        "logout": "Logout"
     },
     'tr':{
         #login page
@@ -103,64 +105,60 @@ context2 = {
         'term2': 'Kullanım Koşulları',
         'sign_up': 'Kaydol',
 
-        
-
-
-
-
-
-
-
-
-
-
-
+        #layout
+        "home": "Ana sayfa",
+        "explore": "Keşfet",
+        "profile": "Profil",
+        "logout": "Çıkış yap"
     },
 'de': {
-    # Giriş sayfası
-    'warning_not_title': 'Warnung',
-    'sign_to': 'Bei Quipster anmelden',
-    'acc_check': 'Sie haben noch kein Konto?',
-    'sign_up_here': 'Hier registrieren',
-    'sign_google': 'Mit Google anmelden',
-    'username': 'Benutzername',
-    'password': 'Passwort',
-    'forgot_pass': 'Passwort vergessen',
-    'sign_in': 'Anmelden',
-    'setting': 'Einstellungen',
-    'follow': 'Folgen',
-    # Profil
-    'edit_profile': 'Profil bearbeiten',
-    'save': 'Speichern',
-    'name': 'Name',
-    'Description': 'Beschreibung',
-    'post': 'Beitrag',
-    'join_date': 'Beitrittsdatum',
-    'followers': 'Follower',
-    'following': 'Folge ich',
-    'posts': 'Beiträge',
-    'replies': 'Antworten',
-    'like': 'Gefällt mir',
+        # Giriş sayfası
+        'warning_not_title': 'Warnung',
+        'sign_to': 'Bei Quipster anmelden',
+        'acc_check': 'Sie haben noch kein Konto?',
+        'sign_up_here': 'Hier registrieren',
+        'sign_google': 'Mit Google anmelden',
+        'username': 'Benutzername',
+        'password': 'Passwort',
+        'forgot_pass': 'Passwort vergessen',
+        'sign_in': 'Anmelden',
+        'setting': 'Einstellungen',
+        'follow': 'Folgen',
+        # Profil
+        'edit_profile': 'Profil bearbeiten',
+        'save': 'Speichern',
+        'name': 'Name',
+        'Description': 'Beschreibung',
+        'post': 'Beitrag',
+        'join_date': 'Beitrittsdatum',
+        'followers': 'Follower',
+        'following': 'Folge ich',
+        'posts': 'Beiträge',
+        'replies': 'Antworten',
+        'like': 'Gefällt mir',
 
-    # Passwort wiederherstellen
-    'forgot_q': 'Passwort vergessen?',
-    'remember_q': 'Passwort wiedererlangt?',
-    'email_adress': 'E-Mail-Adresse',
-    'reset_pass': 'Passwort zurücksetzen',
+        # Passwort wiederherstellen
+        'forgot_q': 'Passwort vergessen?',
+        'remember_q': 'Passwort wiedererlangt?',
+        'email_adress': 'E-Mail-Adresse',
+        'reset_pass': 'Passwort zurücksetzen',
 
-    # Registrierung
-    'sign_up_q': 'Bei Quipster registrieren',
-    'already_have': 'Haben Sie bereits ein Konto?',
-    'sign_in_here': 'Hier anmelden',
-    'sign_up_wGoogle': 'Mit Google registrieren',
-    'first_name': 'Vorname',
-    'surname': 'Nachname',
-    'confirm_pass': 'Passwort bestätigen',
-    'term1': 'Zustimmung',
-    'term2': 'Nutzungsbedingungen',
-    'sign_up': 'Registrieren',
+        # Registrierung
+        'sign_up_q': 'Bei Quipster registrieren',
+        'already_have': 'Haben Sie bereits ein Konto?',
+        'sign_in_here': 'Hier anmelden',
+        'sign_up_wGoogle': 'Mit Google registrieren',
+        'first_name': 'Vorname',
+        'surname': 'Nachname',
+        'confirm_pass': 'Passwort bestätigen',
+        'term1': 'Zustimmung',
+        'term2': 'Nutzungsbedingungen',
+        'sign_up': 'Registrieren',
+
+        #layout
+        "home": "Hauptseite",
+        "explore": "Erkunden",
+        "profile": "Profil",
+        "logout": "Abmelden"
+    }
 }
-
-
-}
-

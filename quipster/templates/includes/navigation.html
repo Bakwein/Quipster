@@ -13,10 +13,10 @@
                     <div class="flex items-center">
                         {% if request.resolver_match.url_name == 'index' %}
                             <i class="text-2xl text-[#223843] fi fi-sr-home"></i>
-                            <span class="ml-5 mt-1 text-[#223843] font-bold">Home</span>
+                            <span class="ml-5 mt-1 text-[#223843] font-bold">{{ context2.home }}</span>
                         {% else %}
                             <i class="text-2xl text-[#223843] fi fi-br-home"></i>
-                            <span class="ml-5 mt-1 text-[#223843]">Home</span>
+                            <span class="ml-5 mt-1 text-[#223843]">{{ context2.home }}</span>
                         {% endif %}
                     </div>
                 </a>
@@ -25,7 +25,7 @@
                 <a href="#" class="inline-block rounded-full p-3 hover:bg-gray-100">
                     <div class="flex items-center">
                         <i class="text-2xl text-[#223843] fi fi-br-search"></i>
-                        <span class="ml-5 mt-1 text-[#223843]">Explore</span>
+                        <span class="ml-5 mt-1 text-[#223843]">{{ context2.explore }}</span>
                     </div>
                 </a>
             </div>
@@ -35,10 +35,10 @@
                     <div class="flex items-center">
                         {% if request.resolver_match.url_name == 'profile' %}
                             <i class="text-2xl text-[#223843] fi fi-sr-user"></i>
-                            <span class="ml-5 mt-1 text-[#223843] font-bold">Profile</span>
+                            <span class="ml-5 mt-1 text-[#223843] font-bold">{{ context2.profile }}</span>
                         {% else %}
                             <i class="text-2xl text-[#223843] fi fi-br-user"></i>
-                            <span class="ml-5 mt-1 text-[#223843]">Profile</span>
+                            <span class="ml-5 mt-1 text-[#223843]">{{ context2.profile }}</span>
                         {% endif %}
                     </div>
                 </a>
@@ -48,18 +48,18 @@
                 {% if user.is_authenticated %}
                     <a href="{% url 'users:logout' %}" class="flex items-center justify-center py-3 border-2 border-[#1d9bf0] bg-[#1d9bf0] rounded-full text-white">
                         <div class="flex items-center">
-                            <span class="font-bold">Logout</span>
+                            <span class="font-bold">{{ context2.logout }}</span>
                         </div>
                     </a>
                 {% else %}
                     <a href="{% url 'users:login' %}" class="flex items-center justify-center py-3 border-2 border-slate-700 bg-[#223843] rounded-lg text-white">
                         <div class="flex items-center">
-                            <span class="font-semibold">Login</span>
+                            <span class="font-semibold">{{ context2.sign_in }}</span>
                         </div>
                     </a>
                     <a href="{% url 'users:register' %}" class="flex items-center justify-center py-3 border-2 border-[#223843] text-[#223843] rounded-lg">
                         <div class="flex items-center">
-                            <span class="font-semibold">Register</span>
+                            <span class="font-semibold">{{ context2.sign_up }}</span>
                         </div>
                     </a>
                 {% endif %}
