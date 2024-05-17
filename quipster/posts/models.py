@@ -32,4 +32,4 @@ class Tweet(models.Model):
     
     @classmethod
     def get_latest_tweets(cls, user: TwitterUser, count: int = 5):
-        return cls.objects.filter(user=user).order_by('-created_at')[:count]
+        return cls.objects.filter(user=user, replied_tweet=None).order_by('-created_at')[:count]

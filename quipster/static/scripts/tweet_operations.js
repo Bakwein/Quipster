@@ -1,9 +1,12 @@
 window.onload = () => {
     const like_buttons = document.querySelectorAll('[data-operationid="like"]');
+    const details = document.querySelectorAll('[data-operationid="details"]');
     const follow_button = document.querySelector('#follow-button');
 
     like_buttons.forEach(btn => {
-        btn.addEventListener('click', async () => {
+        btn.addEventListener('click', async (event) => {
+            event.stopPropagation();
+
             const tweetId = btn.getAttribute('data-tweetid');
             const likeCount = btn.querySelector('p');
 
@@ -26,6 +29,14 @@ window.onload = () => {
                     btn.classList.remove('text-[#f91880]');
                 }
             }
+        });
+    });
+
+    details.forEach(div => {
+        div.addEventListener('click', async (event) => {
+            const url = div.getAttribute('data-url');
+            
+            window.location.href = url;
         });
     });
 
