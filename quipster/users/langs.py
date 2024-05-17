@@ -1,4 +1,5 @@
-context = {
+
+context2 = {
     'en': {
         #login page
         'warning_not_title' : 'Warning',
@@ -10,7 +11,8 @@ context = {
         'password' : 'Password',
         'forgot_pass' : 'Forgot Password',
         'sign_in' : 'Sign in',
-
+        'setting':'SETTINGS',
+        'follow':'Follow',
         #profile
         'edit_profile': 'Edit Profile',
         'save': 'Save',
@@ -62,7 +64,8 @@ context = {
         'password' : 'Şifre',
         'forgot_pass' : 'Şifremi Unuttum',
         'sign_in' : 'Giriş Yap',
-
+         'setting': 'Ayarlar',
+        'follow': 'Takip Et',
         #profile
         'edit_profile': 'Profili Düzenle',
         'save': 'Kaydet',
@@ -112,5 +115,52 @@ context = {
 
 
 
-    }
+    },
+'de': {
+    # Giriş sayfası
+    'warning_not_title': 'Warnung',
+    'sign_to': 'Bei Quipster anmelden',
+    'acc_check': 'Sie haben noch kein Konto?',
+    'sign_up_here': 'Hier registrieren',
+    'sign_google': 'Mit Google anmelden',
+    'username': 'Benutzername',
+    'password': 'Passwort',
+    'forgot_pass': 'Passwort vergessen',
+    'sign_in': 'Anmelden',
+    'setting': 'Einstellungen',
+    'follow': 'Folgen',
+    # Profil
+    'edit_profile': 'Profil bearbeiten',
+    'save': 'Speichern',
+    'name': 'Name',
+    'Description': 'Beschreibung',
+    'post': 'Beitrag',
+    'join_date': 'Beitrittsdatum',
+    'followers': 'Follower',
+    'following': 'Folge ich',
+    'posts': 'Beiträge',
+    'replies': 'Antworten',
+    'like': 'Gefällt mir',
+
+    # Passwort wiederherstellen
+    'forgot_q': 'Passwort vergessen?',
+    'remember_q': 'Passwort wiedererlangt?',
+    'email_adress': 'E-Mail-Adresse',
+    'reset_pass': 'Passwort zurücksetzen',
+
+    # Registrierung
+    'sign_up_q': 'Bei Quipster registrieren',
+    'already_have': 'Haben Sie bereits ein Konto?',
+    'sign_in_here': 'Hier anmelden',
+    'sign_up_wGoogle': 'Mit Google registrieren',
+    'first_name': 'Vorname',
+    'surname': 'Nachname',
+    'confirm_pass': 'Passwort bestätigen',
+    'term1': 'Zustimmung',
+    'term2': 'Nutzungsbedingungen',
+    'sign_up': 'Registrieren',
 }
+
+
+}
+
