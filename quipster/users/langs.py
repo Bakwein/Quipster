@@ -27,14 +27,18 @@ context2 = {
         'posts': 'Posts',
         'replies': 'Replies',
         'like': 'Like',
-
+         
         #recover
         'forgot_q' : 'Forgot password?',
         'remember_q': 'Remembered your password?',
         #'sign_in' : 'Sign in',
         'email_adress': 'Email Adress',
         'reset_pass': 'Reset Password',
-
+        'your_comment': 'Your comment',
+        'Attach_file': 'Attach file',
+        'Set_location': 'Set location',
+        'Upload_image': 'Upload image',
+        'loading':'Loading',
         #register
         'sign_up_q': 'Sign Up to Quipster',
         'already_have': 'Already have an account?',
@@ -48,12 +52,10 @@ context2 = {
         'term1' : 'I accept the',
         'term2' : 'Terms and Conditions',
         'sign_up': 'Sign Up',
-        
-        #layout
-        "home": "Home",
-        "explore": "Explore",
-        "profile": "Profile",
-        "logout": "Logout"
+'search':'SEARCH',
+
+
+
     },
     'tr':{
         #login page
@@ -68,7 +70,12 @@ context2 = {
         'sign_in' : 'Giriş Yap',
          'setting': 'Ayarlar',
         'follow': 'Takip Et',
-        #profile
+        'your_comment':'yorumunuz',
+        'Attach_file':'dosya ekle',
+        'Set_location':'Konumu ayarla',
+        'Upload_image':'Resim yükle',
+     
+                        #profile
         'edit_profile': 'Profili Düzenle',
         'save': 'Kaydet',
         #'username': 'Kullanıcı Adı',
@@ -82,6 +89,7 @@ context2 = {
         'posts': 'Gönderiler',
         'replies': 'Yanıtlar',
         'like': 'Beğeni',
+          'loading':'yükleniyor',
 
         #recover
         'forgot_q' : 'Şifrenizi mi unuttunuz?',
@@ -104,61 +112,71 @@ context2 = {
         'term1': 'Kabul', # sıra farklı olduğundan böyle oldu :D
         'term2': 'Kullanım Koşulları',
         'sign_up': 'Kaydol',
+         'search':'ARAŞTIRMAK',
+        
 
-        #layout
-        "home": "Ana sayfa",
-        "explore": "Keşfet",
-        "profile": "Profil",
-        "logout": "Çıkış yap"
+
+
+
+
+
+
+
+
+
+
     },
 'de': {
-        # Giriş sayfası
-        'warning_not_title': 'Warnung',
-        'sign_to': 'Bei Quipster anmelden',
-        'acc_check': 'Sie haben noch kein Konto?',
-        'sign_up_here': 'Hier registrieren',
-        'sign_google': 'Mit Google anmelden',
-        'username': 'Benutzername',
-        'password': 'Passwort',
-        'forgot_pass': 'Passwort vergessen',
-        'sign_in': 'Anmelden',
-        'setting': 'Einstellungen',
-        'follow': 'Folgen',
-        # Profil
-        'edit_profile': 'Profil bearbeiten',
-        'save': 'Speichern',
-        'name': 'Name',
-        'Description': 'Beschreibung',
-        'post': 'Beitrag',
-        'join_date': 'Beitrittsdatum',
-        'followers': 'Follower',
-        'following': 'Folge ich',
-        'posts': 'Beiträge',
-        'replies': 'Antworten',
-        'like': 'Gefällt mir',
+    # Giriş sayfası
+    'warning_not_title': 'Warnung',
+    'sign_to': 'Bei Quipster anmelden',
+    'acc_check': 'Sie haben noch kein Konto?',
+    'sign_up_here': 'Hier registrieren',
+    'sign_google': 'Mit Google anmelden',
+    'username': 'Benutzername',
+    'password': 'Passwort',
+    'forgot_pass': 'Passwort vergessen',
+    'sign_in': 'Anmelden',
+    'setting': 'Einstellungen',
+    'follow': 'Folgen',
+    # Profil
+    'edit_profile': 'Profil bearbeiten',
+    'save': 'Speichern',
+    'name': 'Name',
+    'Description': 'Beschreibung',
+    'post': 'Beitrag',
+    
+    'join_date': 'Beitrittsdatum',
+    'followers': 'Follower',
+    'following': 'Folge ich',
+    'posts': 'Beiträge',
+    'replies': 'Antworten',
+    'like': 'Gefällt mir',
+    'your_comment': 'Dein Kommentar',
+    'Attach_file': 'Datei anhängen',
+    'Set_location': 'Standort festlegen',
+    'Upload_image': 'Bild hochladen',
+      'loading':'Laden',
+      'search':'SUCHE',
+    # Passwort wiederherstellen
+    'forgot_q': 'Passwort vergessen?',
+    'remember_q': 'Passwort wiedererlangt?',
+    'email_adress': 'E-Mail-Adresse',
+    'reset_pass': 'Passwort zurücksetzen',
 
-        # Passwort wiederherstellen
-        'forgot_q': 'Passwort vergessen?',
-        'remember_q': 'Passwort wiedererlangt?',
-        'email_adress': 'E-Mail-Adresse',
-        'reset_pass': 'Passwort zurücksetzen',
-
-        # Registrierung
-        'sign_up_q': 'Bei Quipster registrieren',
-        'already_have': 'Haben Sie bereits ein Konto?',
-        'sign_in_here': 'Hier anmelden',
-        'sign_up_wGoogle': 'Mit Google registrieren',
-        'first_name': 'Vorname',
-        'surname': 'Nachname',
-        'confirm_pass': 'Passwort bestätigen',
-        'term1': 'Zustimmung',
-        'term2': 'Nutzungsbedingungen',
-        'sign_up': 'Registrieren',
-
-        #layout
-        "home": "Hauptseite",
-        "explore": "Erkunden",
-        "profile": "Profil",
-        "logout": "Abmelden"
-    }
+    # Registrierung
+    'sign_up_q': 'Bei Quipster registrieren',
+    'already_have': 'Haben Sie bereits ein Konto?',
+    'sign_in_here': 'Hier anmelden',
+    'sign_up_wGoogle': 'Mit Google registrieren',
+    'first_name': 'Vorname',
+    'surname': 'Nachname',
+    'confirm_pass': 'Passwort bestätigen',
+    'term1': 'Zustimmung',
+    'term2': 'Nutzungsbedingungen',
+    'sign_up': 'Registrieren',
 }
+
+
+}
+
