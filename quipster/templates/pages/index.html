@@ -73,9 +73,20 @@
                                     <span class="sr-only">{{context2.Upload_image}}</span>
                                 </button>
                             </div>
-                            <button type="submit" class="inline-flex items-center py-2 px-5 font-bold text-center text-white bg-blue-500 rounded-full focus:ring-4 focus:ring-blue-200 dark:focus:ring-blue-900 hover:bg-blue-700">
-                                {{ context2.post_button }}
-                            </button>
+                            <div class="flex items-center">
+                                
+                                <button onclick="functionClick()" class="inline-flex items-center py-2 px-5 font-bold text-center text-white bg-blue-500 rounded-full focus:ring-4 focus:ring-blue-200 dark:focus:ring-blue-900 hover:bg-blue-700">
+                                    <i class="fi fi-br-stars"></i>
+                                </button>
+                                    <button type="submit" class="inline-flex items-center py-2 px-5 font-bold text-center text-white bg-blue-500 rounded-full focus:ring-4 focus:ring-blue-200 dark:focus:ring-blue-900 hover:bg-blue-700">
+                                    {{ context2.post_button }}
+                                </button>
+
+                            </div>
+                           
+
+
+
                         </div>
                     </div>
                 </form>
@@ -292,5 +303,37 @@
             }
         });
     </script>
+
+    <script>
+        async function functionClick()
+        {
+  
+            const text=document.getElementById("content");
+            console.log("text:",text)
+
+            const response = await fetch("/api/get-suggestion", {
+                method: 'POST',
+                headers: {
+                    'X-CSRFToken': "{{ csrf_token }}",
+                },
+                body: JSON.stringify({ text: text.value }),
+            });
+
+            if (response.ok) {
+                const data = await response.json();
+
+                const suggestion=data.suggestion;
+
+                
+               
+
+                text.value = data.suggestion;
+            }
+
+        }
+
+        
+    </script>
     <script src="{% static 'scripts/tweet_operations.js' %}"></script>
+  
 {% endblock %}
