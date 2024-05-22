@@ -27,10 +27,17 @@ for m in genai.list_models():
   if 'generateContent' in m.supported_generation_methods:
     print(m.name)
 
-model = genai.GenerativeModel('gemini-pro')
+model = genai.GenerativeModel(
+  'gemini-1.5-pro-latest',
+  system_instruction=[
+    "You are a linguist and your sole purpose is to correct typos and spelling mistakes in the texts sent to you.",
+    "You need to return the new text between two asterisks (**text**)",
+    "You can also add to the text yourself if the meaning of the text needs to be improved"
+  ]
+)
 
 def generate_sentencefonk(sentence):
-  response = model.generate_content(f"{sentence} bu cümleyi imla ve yazım kurallarına göre düzenle ve düzenlenmiş metni iki yıldız (**) arasına alarak tek bir şonuç döndür")
+  response = model.generate_content(f"{sentence}")
   print(response.text)
   return response.text#cümlenin sonu tahmini
 
