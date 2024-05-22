@@ -9,7 +9,7 @@ from django.contrib.auth.models import User
 from django.views.decorators.http import require_http_methods
 import json
 import re
-
+from .generate_sentence import generate_sentencefonk
 from django.utils.safestring import mark_safe
 from django.utils.html import escape
 
@@ -136,3 +136,27 @@ def comment(request: WSGIRequest):
         return JsonResponse({'status': 'error', 'message': 'Error'}, status=403)
     
     return JsonResponse({'status': 'success', "content": content, "tweet_id": tweet.id, "created_at": tweet.created_at}, status=200)
+
+@require_http_methods(["POST"])
+@login_required
+def artifical_text(request):
+    try:
+        data = json.loads(request.body)
+        text=data["text"]
+        suggestion=generate_sentencefonk(text)
+        print(f"suggestion{suggestion}")   
+
+        # İki yıldız arasındaki karakterleri almak için regex deseni
+        pattern = r'\*\*(.*?)\*\*'
+
+        # Eşleşen karakterleri bulma
+        matches = re.match(pattern, suggestion)
+
+        
+        print(matches.group(1))
+        suggestion=matches.group(1)
+
+
+    except:
+        return JsonResponse({'status': 'error', 'message': 'Error'}, status=403)       
+    return JsonResponse({"suggestion":suggestion},status=200)
