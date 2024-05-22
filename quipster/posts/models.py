@@ -9,6 +9,7 @@ class Tweet(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
     user = models.ForeignKey(TwitterUser, on_delete=models.CASCADE)
     likes = models.ManyToManyField(TwitterUser, related_name='likes', blank=True)
+    images = models.TextField(blank=True, default="")
     replied_tweet = models.ForeignKey('self', on_delete=models.CASCADE, null=True, blank=True)
 
     def __str__(self):
@@ -25,6 +26,9 @@ class Tweet(models.Model):
     
     def is_comment(self):
         return self.replied_tweet != None
+    
+    def get_images(self):
+        return [image.strip() for image in self.images.split("\n")]
     
     @classmethod
     def get_tweets_count(cls, user: TwitterUser):

@@ -9,6 +9,10 @@ from .models import TwitterUser
 from posts.models import Tweet
 from .forms import TwitterUserForm
 from .langs import context2
+
+from django.conf import settings
+import os
+
 # Create your views here.
 
 def sign_in(request: WSGIRequest):
@@ -76,6 +80,11 @@ def sign_up(request: WSGIRequest):
 
     twitter_user = TwitterUser.objects.create(user=user)
     twitter_user.save()
+
+    directory = f"{settings.BASE_DIR}/media/users/{user.username}_{user.id}"
+
+    if not os.path.exists(directory):
+        os.makedirs(directory)
 
     return redirect('users:login')
 

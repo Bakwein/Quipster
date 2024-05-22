@@ -9,9 +9,13 @@ from django.contrib.auth.models import User
 from django.views.decorators.http import require_http_methods
 import json
 import re
+
 from .generate_sentence import generate_sentencefonk
 from django.utils.safestring import mark_safe
 from django.utils.html import escape
+
+from .gallery_manager import upload_images
+from django.conf import settings
 
 # Create your views here.
 
@@ -89,10 +93,16 @@ def post(request: WSGIRequest):
     current_twitter_user = TwitterUser.objects.get(user=current_user)
 
     try:
-        data = json.loads(request.body)
+        data = request.POST
+        files = request.FILES
 
-        content: str = data["content"]
+        content: str = data.get("content")
+
+        if content is None:
+            return JsonResponse({'status': 'error', 'message': 'Error'}, status=403)
         
+        images = files.getlist("tweet-images")
+
         content = escape(content)
         
         content = content.replace("\n", "<br>")
@@ -102,11 +112,19 @@ def post(request: WSGIRequest):
         content = re.sub(r'\```(.*?)\```', r'<code>\1</code>', content)
 
         tweet = Tweet.objects.create(user=current_twitter_user, content=content)
+        
+        dirname = f"{current_user.username}_{current_user.id}"
+        uploaded_images = []
+
+        if len(images) > 0:
+            uploaded_images = upload_images(dirname, tweet.id, images)
+            tweet.images = "\n".join(uploaded_images)
+
         tweet.save()
     except:
         return JsonResponse({'status': 'error', 'message': 'Error'}, status=403)
     
-    return JsonResponse({'status': 'success', "content": content, "id": tweet.id, "created_at": tweet.created_at}, status=200)
+    return JsonResponse({'status': 'success', "content": content, "tweet_id": tweet.id, "created_at": tweet.created_at, "uploaded_images": uploaded_images}, status=200)
 
 @require_http_methods(["POST"])
 @login_required
