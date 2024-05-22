@@ -51,27 +51,19 @@
                         <div class="px-3 bg-white rounded-t-lg dark:bg-gray-800">
                             <label for="content" class="sr-only">Your comment</label>
                             <textarea id="content" name="content" rows="3" class="w-full px-0 text-gray-900 bg-white border-0 dark:bg-gray-800 focus:ring-0 dark:text-white dark:placeholder-gray-400" placeholder="{{ context2.write_post }}" required ></textarea>
+                            <div id="image-area" class="w-full grid grid-cols-2 gap-5 my-3">
+                                
+                            </div>
                         </div>
                         <div class="flex items-center justify-between px-3 py-2 border-t dark:border-gray-500">
                             <div class="flex ps-0 space-x-1 rtl:space-x-reverse sm:ps-2">
-                                <button type="button" class="inline-flex justify-center items-center p-2 text-gray-500 rounded cursor-pointer hover:text-gray-900 hover:bg-gray-100 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-600">
-                                    <svg class="w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 12 20">
-                                        <path stroke="currentColor" stroke-linejoin="round" stroke-width="2" d="M1 6v8a5 5 0 1 0 10 0V4.5a3.5 3.5 0 1 0-7 0V13a2 2 0 0 0 4 0V6"/>
-                                    </svg>
-                                    <span class="sr-only">Attach file</span>
-                                </button>
-                                <button type="button" class="inline-flex justify-center items-center p-2 text-gray-500 rounded cursor-pointer hover:text-gray-900 hover:bg-gray-100 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-600">
-                                    <svg class="w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 16 20">
-                                        <path d="M8 0a7.992 7.992 0 0 0-6.583 12.535 1 1 0 0 0 .12.183l.12.146c.112.145.227.285.326.4l5.245 6.374a1 1 0 0 0 1.545-.003l5.092-6.205c.206-.222.4-.455.578-.7l.127-.155a.934.934 0 0 0 .122-.192A8.001 8.001 0 0 0 8 0Zm0 11a3 3 0 1 1 0-6 3 3 0 0 1 0 6Z"/>
-                                    </svg>
-                                    <span class="sr-only">Set location</span>
-                                </button>
-                                <button type="button" class="inline-flex justify-center items-center p-2 text-gray-500 rounded cursor-pointer hover:text-gray-900 hover:bg-gray-100 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-600">
+                                <label for="tweet-images" class="inline-flex justify-center items-center p-2 text-gray-500 rounded cursor-pointer hover:text-gray-900 hover:bg-gray-100 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-600">
                                     <svg class="w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 18">
                                         <path d="M18 0H2a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2Zm-5.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3Zm4.376 10.481A1 1 0 0 1 16 15H4a1 1 0 0 1-.895-1.447l3.5-7A1 1 0 0 1 7.468 6a.965.965 0 0 1 .9.5l2.775 4.757 1.546-1.887a1 1 0 0 1 1.618.1l2.541 4a1 1 0 0 1 .028 1.011Z"/>
                                     </svg>
                                     <span class="sr-only">Upload image</span>
-                                </button>
+                                    <input multiple hidden type="file" name="tweet-images" id="tweet-images">
+                                </label>
                             </div>
                             <button type="submit" class="inline-flex items-center py-2 px-5 font-bold text-center text-white bg-blue-500 rounded-full focus:ring-4 focus:ring-blue-200 dark:focus:ring-blue-900 hover:bg-blue-700">
                                 {{ context2.post_button }}
@@ -124,6 +116,17 @@
                         <div class="text-slate-800">
                             {{ tweet.content|safe }}
                         </div>
+                        {% if tweet.images %}
+                            {% with images_length=tweet.get_images|length %}
+                                {% with result=images_length|divisibleby:2 %}
+                                    <div class="w-full grid-rows-{{ result }} grid grid-cols-2 gap-5 my-3">
+                                        {% for image in tweet.get_images %}
+                                            <img class="w-full h-full object-cover" src="{{ image }}" alt="">
+                                        {% endfor %}
+                                    </div>
+                                {% endwith %}
+                            {% endwith %}
+                        {% endif %}
                         <div class="flex items-center justify-between mt-2 w-2/3 -translate-x-2.5">
                             <div class="text-gray-500">
                                 <button class="rounded-full flex items-center p-2.5 hover:text-[#1d9bf0] hover:bg-[#e1eef6] relative">
@@ -214,14 +217,13 @@
             skeleton.classList.remove("hidden");
 
             const formData = new FormData(post_form);
-            const content = formData.get("content");
             
             const response = await fetch("/api/post", {
                 method: 'POST',
                 headers: {
                     'X-CSRFToken': "{{ csrf_token }}",
                 },
-                body: JSON.stringify({ content: content }),
+                body: formData,
             });
 
             if (response.ok) {
@@ -229,9 +231,25 @@
                 
                 const content_textarea = post_form.querySelector("textarea#content");
                 content_textarea.value = "";
+
+                let images_div = "";
+
+                if (data.uploaded_images.length > 0) {
+                    let images = "";
+
+                    for (const image of data.uploaded_images) {
+                        images += `<img class="w-full h-full object-cover" src="${image}" alt="">`
+                    }
+
+                    images_div = `
+                        <div class="w-full grid-rows-${data.uploaded_images.length / 2} grid grid-cols-2 gap-5 my-3">
+                            ${images}
+                        </div>
+                    `
+                }
                 
                 const tweet_content = `
-                    <div class="tweet p-5 flex w-full gap-x-2 w-full border-t transition-colors hover:bg-gray-100 cursor-pointer">
+                    <div data-operationid="details" data-url="/${data.tweet_id}" class="tweet p-5 flex w-full gap-x-2 w-full border-t transition-colors hover:bg-gray-100 cursor-pointer">
                         <div class="w-10 h-10 rounded-full">
                             {% if twitter_user.profile_picture %}
                                 <img class="w-full h-full object-cover rounded-full" src="{{ twitter_user.profile_picture.url }}" alt="">
@@ -256,6 +274,7 @@
                             <div class="text-slate-800">
                                 ${data.content}
                             </div>
+                            ${images_div}
                             <div class="flex items-center justify-between mt-2 w-2/3 -translate-x-2.5">
                                 <div class="text-gray-500">
                                     <button class="rounded-full flex items-center p-2.5 hover:text-[#1d9bf0] hover:bg-[#e1eef6] relative">
@@ -284,11 +303,68 @@
 
                 tweets_container.innerHTML = tweet_content + tweets_container.innerHTML;
 
-                const new_like_button = tweets_container.querySelector('[data-operationid="like"]');
+                const new_like_buttons = tweets_container.querySelectorAll('[data-operationid="like"]');
                 
-                new_like_button.addEventListener("click", async () => {
-                    await like(new_like_button);
-                });
+                new_like_buttons.forEach(new_like_button => {
+                    new_like_button.addEventListener("click", async (event) => {
+                        event.stopPropagation();
+
+                        await like(new_like_button);
+                    });
+                })
+
+                const details = tweets_container.querySelectorAll('[data-operationid="details"]');
+                
+                details.forEach(detail => {
+                    detail.addEventListener("click", () => {
+                        const url = detail.getAttribute('data-url');
+                
+                        window.location.href = url;
+                    });
+                })
+
+                image_area.innerHTML = ""
+
+                const tweet_images = document.querySelector("input#tweet-images");
+                tweet_images.value = "";
+            }
+        });
+    </script>
+    <script>
+        const tweet_images = document.querySelector("input#tweet-images");
+        const image_area = document.querySelector("div#image-area");
+
+        tweet_images.addEventListener("change", function() {
+            let files = this.files;
+            let i = 0;
+
+            const filesCount = files.length;
+
+            const rows = (filesCount < 5) ? `grid-rows-${Number(filesCount / 2)}` : "grid-rows-2";
+
+            image_area.classList.add(rows);
+
+            for (const file of files) {
+                if (i > 4) {
+                    break;
+                }
+
+                let reader = new FileReader();
+
+                reader.onload = function(e) {
+                    let image = document.createElement("img");
+                    
+                    image.src = e.target.result;
+                    image.style.objectFit = "cover";
+                    image.style.width = "100%";
+                    image.style.height = "100%";
+
+                    image_area.append(image);
+                }
+
+                reader.readAsDataURL(file);
+                
+                i++;
             }
         });
     </script>

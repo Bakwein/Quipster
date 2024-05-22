@@ -10,17 +10,18 @@ import requests
 import secrets
 
 from django.contrib.auth.decorators import login_required
-
 from .langs import context
 
 # Create your views here.
 
 @login_required(redirect_field_name="next", login_url="users:login")
-def index(request: WSGIRequest): 
+def index(request: WSGIRequest):
     twitter_user = TwitterUser.objects.get(user=request.user)
     all_tweets = []
 
-    all_tweets.extend(Tweet.get_latest_tweets(user=twitter_user))
+    user_tweets = Tweet.get_latest_tweets(user=twitter_user)
+
+    all_tweets.extend(user_tweets)
 
     for user in twitter_user.following.all():
         tw_user = TwitterUser.objects.get(user=user)
