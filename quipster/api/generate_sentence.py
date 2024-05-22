@@ -21,7 +21,7 @@ print(response.text)
 '''
 import google.generativeai as genai
 
-genai.configure(api_key="buraya gemini api key koyacaksınız")
+genai.configure(api_key="AIzaSyCFvhWAJ8rzMrIJKpb1lll0-jXn5708p3E")
 
 for m in genai.list_models():
   if 'generateContent' in m.supported_generation_methods:
@@ -29,13 +29,13 @@ for m in genai.list_models():
 
 model = genai.GenerativeModel('gemini-pro')
 
-def generate_sentence(sentence):
-  response = model.generate_content(f"{sentence}cümlesinin sonuna hangi kelime gelebilir")
+def generate_sentencefonk(sentence):
+  response = model.generate_content(f"{sentence} bu cümleyi imla ve yazım kurallarına göre düzenle ve düzenlenmiş metni iki yıldız (**) arasına alarak tek bir şonuç döndür")
   print(response.text)
   return response.text#cümlenin sonu tahmini
 
+generate_sentencefonk("aliye geldi")
 
-generate_sentence("mustafa kemal paşa")
 '''
 çıktısı:
 models/gemini-1.0-pro
