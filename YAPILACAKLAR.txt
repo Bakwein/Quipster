@@ -1,0 +1,2 @@
+sifre-email regex kontrolü
+dil cookie ayarlama

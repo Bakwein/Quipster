@@ -1,0 +1,17 @@
+version: '3'
+
+services:
+  web:
+    build: .
+    command: bash -c " chmod +x ./docker_entrypoint.sh && ./docker_entrypoint.sh"
+    volumes:
+      - .:/code
+      #- .db_data/db.sqlite3:/db.sqlite3
+    ports:
+      - "8000:8000"
+    #depends_on:
+    #  - db
+    #    condition: service_healthy
+
+  
+#volumes:

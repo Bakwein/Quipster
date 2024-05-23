@@ -1,0 +1,74 @@
+{% load static %}
+
+<header class="flex flex-col flex-auto items-end w-2/5 xl:w-3/5 max-w-[571px] relative">
+    <div class="flex flex-col h-full fixed top-0 py-1 text-xl w-[271px] border-r">
+        <div>
+            <a href="{% url 'posts:index' %}" class="inline-block py-3">
+                <img width="58" src="{% static 'images/quipster_logo.png' %}" alt="">
+            </a>
+        </div>
+        <nav class="flex flex-col gap-y-2 mt-2 h-full">
+            <div>
+                <a href="{% url 'posts:index' %}" class="inline-block rounded-full p-3 hover:bg-gray-100">
+                    <div class="flex items-center">
+                        {% if request.resolver_match.url_name == 'index' %}
+                            <i class="text-2xl text-[#223843] fi fi-sr-home"></i>
+                            <span class="ml-5 mt-1 text-[#223843] font-bold">{{ context2.home }}</span>
+                        {% else %}
+                            <i class="text-2xl text-[#223843] fi fi-br-home"></i>
+                            <span class="ml-5 mt-1 text-[#223843]">{{ context2.home }}</span>
+                        {% endif %}
+                    </div>
+                </a>
+            </div>
+            <div>
+                <a href="{% url 'posts:explore' %}" class="inline-block rounded-full p-3 hover:bg-gray-100">
+                    <div class="flex items-center">
+                        {% if request.resolver_match.url_name == 'explore' %}
+                            <i class="text-2xl text-[#223843] fi fi-sr-search"></i>
+                            <span class="ml-5 mt-1 text-[#223843] font-bold">{{ context2.explore }}</span>
+                        {% else %}
+                            <i class="text-2xl text-[#223843] fi fi-br-search"></i>
+                            <span class="ml-5 mt-1 text-[#223843]">{{ context2.explore }}</span>
+                        {% endif %}
+                    </div>
+                </a>
+            </div>
+            {% if user.is_authenticated %}
+            <div>
+                <a href="{% url 'users:profile' user.username %}" class="inline-block rounded-full p-3 hover:bg-gray-100">
+                    <div class="flex items-center">
+                        {% if request.resolver_match.url_name == 'profile' %}
+                            <i class="text-2xl text-[#223843] fi fi-sr-user"></i>
+                            <span class="ml-5 mt-1 text-[#223843] font-bold">{{ context2.profile }}</span>
+                        {% else %}
+                            <i class="text-2xl text-[#223843] fi fi-br-user"></i>
+                            <span class="ml-5 mt-1 text-[#223843]">{{ context2.profile }}</span>
+                        {% endif %}
+                    </div>
+                </a>
+            </div>
+            {% endif %}
+            <div class="flex flex-col mt-auto pr-5 pb-3 gap-3 text-[17px]">
+                {% if user.is_authenticated %}
+                    <a href="{% url 'users:logout' %}" class="flex items-center justify-center py-3 border-2 border-[#1d9bf0] bg-[#1d9bf0] rounded-full text-white">
+                        <div class="flex items-center">
+                            <span class="font-bold">{{ context2.logout }}</span>
+                        </div>
+                    </a>
+                {% else %}
+                    <a href="{% url 'users:login' %}" class="flex items-center justify-center py-3 border-2 border-slate-700 bg-[#223843] rounded-lg text-white">
+                        <div class="flex items-center">
+                            <span class="font-semibold">{{ context2.sign_in }}</span>
+                        </div>
+                    </a>
+                    <a href="{% url 'users:register' %}" class="flex items-center justify-center py-3 border-2 border-[#223843] text-[#223843] rounded-lg">
+                        <div class="flex items-center">
+                            <span class="font-semibold">{{ context2.sign_up }}</span>
+                        </div>
+                    </a>
+                {% endif %}
+            </div>
+        </nav>
+    </div>
+</header>

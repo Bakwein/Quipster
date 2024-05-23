@@ -1,0 +1,403 @@
+{% extends "layout.html" %}
+
+{% load static %}
+
+{% block title %} Quipster {% endblock %}
+
+{% block head %}
+    <style>
+        .active-btn {
+            font-weight: bolder !important;
+            color: rgb(38 38 38) !important;
+        }
+        .active-btn div {
+            border-color: rgb(59 130 246);
+        }
+    </style>
+    <script>
+        var csrfToken = "{{ csrf_token }}"
+    </script>
+{% endblock %}
+
+{% block content %}
+    <div class="flex flex-col flex-none w-full max-w-2xl min-h-screen border-r">
+        <div class="flex items-center">
+            <div class="flex-1">
+                <button class="active-btn flex items-center justify-center w-full h-[53px] text-[#536471] font-medium transition-colors hover:bg-gray-100">
+                    <div class="flex items-center justify-center w-fit h-full border-b-4 border-transparent">
+                        {{ context2.for_you }}
+                    </div>
+                </button>
+            </div>
+            <div class="flex-1">
+                <button class="w-full h-[53px] text-[#536471] font-medium transition-colors hover:bg-gray-100">
+                    {{ context2.followings }}
+                </button>
+            </div>
+        </div>
+        <div class="flex w-full p-5 border-t">
+            <div class="flex-none w-10">
+                <div class="w-10 h-10 rounded-full">
+                    {% if twitter_user.profile_picture %}
+                        <img class="w-full h-full object-cover rounded-full" src="{{ twitter_user.profile_picture.url }}" alt="">
+                    {% else %}
+                        <img class="w-full h-full object-cover rounded-full bg-slate-50 p-1" src="{% static 'images/user_logo.png' %}" alt="">
+                    {% endif %}
+                </div>
+            </div>
+            <div class="flex-1 ml-5">
+                <form id="post-form" method="post">
+                    <div class="w-full mb-4 border border-gray-200 rounded-lg bg-gray-50 dark:bg-gray-700 dark:border-gray-600">
+                        <div class="px-3 bg-white rounded-t-lg dark:bg-gray-800">
+                            <label for="content" class="sr-only">{{context2.your_comment}}</label>
+                            <textarea id="content" name="content" rows="3" class="w-full px-0 text-gray-900 bg-white border-0 dark:bg-gray-800 focus:ring-0 dark:text-white dark:placeholder-gray-400" placeholder="{{ context2.write_post }}" required ></textarea>
+                            <div id="image-area" class="w-full grid grid-cols-2 gap-5 my-3">
+                                
+                            </div>
+                        </div>
+                        <div class="flex items-center justify-between px-3 py-2 border-t dark:border-gray-500">
+                            <div class="flex ps-0 space-x-1 rtl:space-x-reverse sm:ps-2">
+                                <label for="tweet-images" class="inline-flex justify-center items-center p-2 text-gray-500 rounded cursor-pointer hover:text-gray-900 hover:bg-gray-100 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-600">
+                                    <svg class="w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 18">
+                                        <path d="M18 0H2a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2Zm-5.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3Zm4.376 10.481A1 1 0 0 1 16 15H4a1 1 0 0 1-.895-1.447l3.5-7A1 1 0 0 1 7.468 6a.965.965 0 0 1 .9.5l2.775 4.757 1.546-1.887a1 1 0 0 1 1.618.1l2.541 4a1 1 0 0 1 .028 1.011Z"/>
+                                    </svg>
+                                    <span class="sr-only">{{context2.Upload_image}}</span>
+                                    <input multiple hidden type="file" name="tweet-images" id="tweet-images">
+                                </label>
+                            </div>
+                            <div class="flex items-center">
+                                <button onclick="functionClick(event)" class="inline-flex items-center justify-center h-10 w-10 font-bold text-center text-slate-500 bg-slate-200 rounded-full focus:ring-4 focus:ring-slate-200 dark:focus:ring-slate-800 hover:bg-slate-300">
+                                    <i class="fi fi-br-stars"></i>
+                                </button>
+                                </button>
+                                    <button type="submit" class="inline-flex items-center py-2 px-5 ml-3 font-bold text-center text-white bg-blue-500 rounded-full focus:ring-4 focus:ring-blue-200 dark:focus:ring-blue-800 hover:bg-blue-700">
+                                    {{ context2.post_button }}
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div id="tweets-container" class="flex flex-col pb-80">
+            <div id="skeleton" role="status" class="hidden p-5 animate-pulse md:space-y-0 md:space-x-3 rtl:space-x-reverse flex border-t">
+                <div class="w-10 h-10 rounded-full p-2 bg-gray-300 rounded dark:bg-gray-700">
+                    <svg class="w-full h-full text-gray-200 dark:text-gray-500" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 18">
+                        <path d="M18 0H2a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2Zm-5.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3Zm4.376 10.481A1 1 0 0 1 16 15H4a1 1 0 0 1-.895-1.447l3.5-7A1 1 0 0 1 7.468 6a.965.965 0 0 1 .9.5l2.775 4.757 1.546-1.887a1 1 0 0 1 1.618.1l2.541 4a1 1 0 0 1 .028 1.011Z"/>
+                    </svg>
+                </div>
+                <div class="flex-1">
+                    <div class="h-2.5 bg-gray-200 rounded-full dark:bg-gray-700 w-48 mb-4"></div>
+                    <div class="h-2 bg-gray-200 rounded-full dark:bg-gray-700 max-w-[480px] mb-2.5"></div>
+                    <div class="h-2 bg-gray-200 rounded-full dark:bg-gray-700 mb-2.5"></div>
+                    <div class="h-2 bg-gray-200 rounded-full dark:bg-gray-700 max-w-[440px] mb-2.5"></div>
+                    <div class="h-2 bg-gray-200 rounded-full dark:bg-gray-700 max-w-[460px] mb-2.5"></div>
+                    <div class="h-2 bg-gray-200 rounded-full dark:bg-gray-700 max-w-[360px]"></div>
+                </div>
+                <span class="sr-only">{{context2.loading}}</span>
+            </div>
+            {% for tweet in tweets %}
+                <div data-operationid="details" data-url="{% url 'posts:post-details' tweet.id %}" class="tweet p-5 flex w-full gap-x-2 w-full border-t transition-colors hover:bg-gray-100 cursor-pointer">
+                    <a href="{% url 'users:profile' tweet.user.user.username %}" class="w-10 h-10 rounded-full">
+                        {% if tweet.user.profile_picture %}
+                            <img class="w-full h-full object-cover rounded-full" src="{{ tweet.user.profile_picture.url }}" alt="">
+                        {% else %}
+                            <img class="w-full h-full object-cover rounded-full bg-slate-50 p-1" src="{% static 'images/user_logo.png' %}" alt="">
+                        {% endif %}
+                    </a>
+                    <div class="flex flex-col w-full text-[15px]">
+                        <a href="{% url 'users:profile' tweet.user.user.username %}" class="flex items-center text-gray-500 w-full relative">
+                            <div class="flex items-center">
+                                <p class="text-slate-800 font-bold">{{ tweet.user.user.get_full_name }}</p>
+                                <p class="ml-1">@{{ tweet.user.user.username }}</p>
+                                <span class="mx-1">·</span>
+                                <p class="font-medium">{{ tweet.created_at|date:"d F Y" }}</p>
+                            </div>
+                            <div class="absolute right-0">
+                                <button class="p-2.5 transition-colors rounded-full text-slate-500 hover:text-[#1d9bf0] hover:bg-[#e1eef6]">
+                                    <i class="fi fi-br-menu-dots"></i>
+                                </button>
+                            </div>
+                        </a>
+                        <div class="text-slate-800">
+                            {{ tweet.content|safe }}
+                        </div>
+                        {% if tweet.images %}
+                            {% with images_length=tweet.get_images|length %}
+                                {% with result=images_length|divisibleby:2 %}
+                                    <div class="w-full grid-rows-{{ result }} grid grid-cols-2 gap-5 my-3">
+                                        {% for image in tweet.get_images %}
+                                            <img class="w-full h-full object-cover" src="{{ image }}" alt="">
+                                        {% endfor %}
+                                    </div>
+                                {% endwith %}
+                            {% endwith %}
+                        {% endif %}
+                        <div class="flex items-center justify-between mt-2 w-2/3 -translate-x-2.5">
+                            <div class="text-gray-500">
+                                <button class="rounded-full flex items-center p-2.5 hover:text-[#1d9bf0] hover:bg-[#e1eef6] relative">
+                                    <i class="fi fi-br-comments"></i>
+                                    <p class="text-[13px] absolute left-8">{{ tweet.get_comments_count }}</p>
+                                </button>
+                            </div>
+                            <div class="text-gray-500">
+                                <button class="rounded-full flex items-center p-2.5 hover:text-[#00ba7c] hover:bg-[#def1eb] relative">
+                                    <i class="fi fi-br-arrows-retweet"></i>
+                                    <p class="text-[13px] absolute left-8">0</p>
+                                </button>
+                            </div>
+                            <div class="text-gray-500">
+                                {% if twitter_user in tweet.likes.all %}
+                                    <button data-operationid="like" data-tweetid="{{ tweet.id }}" class="rounded-full flex items-center p-2.5 text-[#f91880] hover:text-[#f91880] hover:bg-[#f7e0eb] relative">
+                                        <i class="fi fi-br-heart"></i>
+                                        <p class="text-[13px] absolute left-8">{{ tweet.get_likes }}</p>
+                                    </button>
+                                {% else %}
+                                    <button data-operationid="like" data-tweetid="{{ tweet.id }}" class="rounded-full flex items-center p-2.5 hover:text-[#f91880] hover:bg-[#f7e0eb] relative">
+                                        <i class="fi fi-br-heart"></i>
+                                        <p class="text-[13px] absolute left-8">{{ tweet.get_likes }}</p>
+                                    </button>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+    <div class="w-full max-w-md h-full">
+        <div class="flex items-center w-full p-3">
+            <form class="flex items-center w-full max-w-md">   
+                <label for="simple-search" class="sr-only">{{context2.search}}</label>
+                <div class="relative w-full">
+                    <div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
+                        <i class="text-gray-500 dark:text-gray-300 fi fi-br-search"></i>
+                    </div>
+                    <input type="text" id="simple-search" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-full focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="{{ context2.search }}" required />
+                </div>
+            </form>
+        </div>
+    </div>
+{% endblock %}
+{% block scripts %}
+    <script>
+        const post_form = document.querySelector("form#post-form");
+        const tweets_container = document.querySelector("div#tweets-container");
+
+        async function like(btn) {
+            const tweetId = btn.getAttribute('data-tweetid');
+            const likeCount = btn.querySelector('p');
+
+            const response = await fetch(`/api/like`, {
+                method: 'POST',
+                headers: {
+                    'X-CSRFToken': csrfToken,
+                },
+                body: JSON.stringify({ tweet_id: parseInt(tweetId) }),
+            });
+
+            if (response.ok) {
+                const data = await response.json();
+
+                likeCount.textContent = data.like_count;
+
+                if (data.is_liked) {
+                    btn.classList.add('text-[#f91880]');
+                } else {
+                    btn.classList.remove('text-[#f91880]');
+                }
+            }
+        }
+
+
+        function formatDate(isoDate) {
+            const date = new Date(isoDate);
+            const options = { year: 'numeric', month: 'long', day: '2-digit' };
+            return date.toLocaleDateString('tr-TR', options);
+        }
+        
+        post_form?.addEventListener("submit", async (event) => {
+            event.preventDefault();
+
+            const skeleton = document.querySelector("div#skeleton");
+            skeleton.classList.remove("hidden");
+
+            const formData = new FormData(post_form);
+            
+            const response = await fetch("/api/post", {
+                method: 'POST',
+                headers: {
+                    'X-CSRFToken': "{{ csrf_token }}",
+                },
+                body: formData,
+            });
+
+            if (response.ok) {
+                const data = await response.json();
+                
+                const content_textarea = post_form.querySelector("textarea#content");
+                content_textarea.value = "";
+
+                let images_div = "";
+
+                if (data.uploaded_images.length > 0) {
+                    let images = "";
+
+                    for (const image of data.uploaded_images) {
+                        images += `<img class="w-full h-full object-cover" src="${image}" alt="">`
+                    }
+
+                    images_div = `
+                        <div class="w-full grid-rows-${data.uploaded_images.length / 2} grid grid-cols-2 gap-5 my-3">
+                            ${images}
+                        </div>
+                    `
+                }
+                
+                const tweet_content = `
+                    <div data-operationid="details" data-url="/${data.tweet_id}" class="tweet p-5 flex w-full gap-x-2 w-full border-t transition-colors hover:bg-gray-100 cursor-pointer">
+                        <div class="w-10 h-10 rounded-full">
+                            {% if twitter_user.profile_picture %}
+                                <img class="w-full h-full object-cover rounded-full" src="{{ twitter_user.profile_picture.url }}" alt="">
+                            {% else %}
+                                <img class="w-full h-full object-cover rounded-full bg-slate-50 p-1" src="{% static 'images/user_logo.png' %}" alt="">
+                            {% endif %}
+                        </div>
+                        <div class="flex flex-col w-full text-[15px]">
+                            <div class="flex items-center text-gray-500 w-full relative">
+                                <div class="flex items-center">
+                                    <p class="text-slate-800 font-bold">{{ twitter_user.user.get_full_name }}</p>
+                                    <p class="ml-1">@{{ twitter_user.user.username }}</p>
+                                    <span class="mx-1">·</span>
+                                    <p class="font-medium">${formatDate(data.created_at)}</p>
+                                </div>
+                                <div class="absolute right-0">
+                                    <button class="p-2.5 transition-colors rounded-full text-slate-500 hover:text-[#1d9bf0] hover:bg-[#e1eef6]">
+                                        <i class="fi fi-br-menu-dots"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="text-slate-800">
+                                ${data.content}
+                            </div>
+                            ${images_div}
+                            <div class="flex items-center justify-between mt-2 w-2/3 -translate-x-2.5">
+                                <div class="text-gray-500">
+                                    <button class="rounded-full flex items-center p-2.5 hover:text-[#1d9bf0] hover:bg-[#e1eef6] relative">
+                                        <i class="fi fi-br-comments"></i>
+                                        <p class="text-[13px] absolute left-8">0</p>
+                                    </button>
+                                </div>
+                                <div class="text-gray-500">
+                                    <button class="rounded-full flex items-center p-2.5 hover:text-[#00ba7c] hover:bg-[#def1eb] relative">
+                                        <i class="fi fi-br-arrows-retweet"></i>
+                                        <p class="text-[13px] absolute left-8">0</p>
+                                    </button>
+                                </div>
+                                <div class="text-gray-500">
+                                    <button data-operationid="like" data-tweetid="${data.tweet_id}" class="rounded-full flex items-center p-2.5 hover:text-[#f91880] hover:bg-[#f7e0eb] relative">
+                                        <i class="fi fi-br-heart"></i>
+                                        <p class="text-[13px] absolute left-8">0</p>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `
+                
+                skeleton.classList.add("hidden");
+
+                tweets_container.innerHTML = tweet_content + tweets_container.innerHTML;
+
+                const new_like_buttons = tweets_container.querySelectorAll('[data-operationid="like"]');
+                
+                new_like_buttons.forEach(new_like_button => {
+                    new_like_button.addEventListener("click", async (event) => {
+                        event.stopPropagation();
+
+                        await like(new_like_button);
+                    });
+                })
+
+                const details = tweets_container.querySelectorAll('[data-operationid="details"]');
+                
+                details.forEach(detail => {
+                    detail.addEventListener("click", () => {
+                        const url = detail.getAttribute('data-url');
+                
+                        window.location.href = url;
+                    });
+                })
+
+                image_area.innerHTML = ""
+
+                const tweet_images = document.querySelector("input#tweet-images");
+                tweet_images.value = "";
+            }
+        });
+    </script>
+    <script>
+        const tweet_images = document.querySelector("input#tweet-images");
+        const image_area = document.querySelector("div#image-area");
+
+        tweet_images.addEventListener("change", function() {
+            let files = this.files;
+            let i = 0;
+
+            const filesCount = files.length;
+
+            const rows = (filesCount < 5) ? `grid-rows-${Number(filesCount / 2)}` : "grid-rows-2";
+
+            image_area.classList.add(rows);
+
+            for (const file of files) {
+                if (i > 4) {
+                    break;
+                }
+
+                let reader = new FileReader();
+
+                reader.onload = function(e) {
+                    let image = document.createElement("img");
+                    
+                    image.src = e.target.result;
+                    image.style.objectFit = "cover";
+                    image.style.width = "100%";
+                    image.style.height = "100%";
+
+                    image_area.append(image);
+                }
+
+                reader.readAsDataURL(file);
+                
+                i++;
+            }
+        });
+    </script>
+
+    <script>
+        async function functionClick(event)
+        {
+            event.preventDefault();
+
+            const text = document.getElementById("content");
+
+            const response = await fetch("/api/get-suggestion", {
+                method: 'POST',
+                headers: {
+                    'X-CSRFToken': "{{ csrf_token }}",
+                },
+                body: JSON.stringify({ text: text.value }),
+            });
+
+            if (response.ok) {
+                const data = await response.json();
+                const suggestion = data.suggestion;
+
+                text.value = data.suggestion;
+            }
+        }
+    </script>
+    <script src="{% static 'scripts/tweet_operations.js' %}"></script>
+  
+{% endblock %}

@@ -1,0 +1,336 @@
+{% extends "layout.html" %}
+
+{% load static %}
+
+{% block title %} Profile / Quipster {% endblock %}
+
+{% block head %}
+    <style>
+        .tweet:last-child {
+            border-bottom: 1px solid #e5e7eb;
+        }
+        .unfollow:hover {
+            border-color: #fdc9ce;
+            background-color: #fee8ea;
+            color: #f4212e;
+        }
+        .unfollow::before {
+            content: "Takip ediliyor";
+        }
+        .unfollow:hover::before {
+            content: "Takibi bırak";
+        }
+        .follow:hover {
+            background-color: rgb(243 244 246);
+        }
+    </style>
+    <script>
+        var csrfToken = "{{ csrf_token }}"
+    </script>
+{% endblock %}
+
+{% block content %}
+    {% if user.username == username %}
+        <div id="editor" class="hidden absolute flex items-center justify-center w-full h-screen bg-gray-500/50 top-0 left-0 z-10">
+            <form method="post" enctype="multipart/form-data" class="w-1/3 h-[585px] rounded-2xl relative px-1 pb-5 bg-white overflow-y-auto">
+                {% csrf_token %}
+                <div class="flex sticky top-0 items-center px-2 py-2 z-50 bg-white">
+                    <div>
+                        <button data-modal-close="crud-modal" class="p-3 rounded-full hover:bg-gray-100">
+                            <i class="fi fi-br-arrow-left"></i>
+                        </button>
+                    </div>
+                    <div class="ml-10">
+                        <h1 class="text-xl font-bold text-slate-800">{{context2.edit_profile}}</h1>
+                    </div>
+                    <div class="ml-auto">
+                        <button type="submit" data-modal-target="crud-modal" data-modal-save="crud-modal" class="px-5 py-2 rounded-full text-sm bg-[#1d9bf0] text-white font-bold hover:opacity-80">
+                            {{context2.save}}
+                        </button>
+                    </div>
+                </div>
+                <div>
+                    <div class="relative">
+                        <div class="bg-slate-800 h-52 relative bg-gray-100">
+                            <div class="absolute flex items-center justify-center w-full h-full bg-slate-800/30">
+                                <div class="flex flex-col items-center justify-center text-gray-100">
+                                    <label for="banner-image" class="bg-neutral-800/50 text-lg rounded-full p-3 cursor-pointer">
+                                        <i class="fi fi-br-camera"></i>
+                                        <input id="banner-image" name="banner_image" type="file" class="hidden" />
+                                    </label>
+                                </div>
+                            </div>
+                            {% if twitter_user.banner_image %}
+                                <img id="edit-banner-image" class="w-full h-full object-cover" src="{{ twitter_user.banner_image.url }}" alt="">
+                            {% else %}
+                                <img id="edit-banner-image" class="hidden w-full h-full object-cover" src="" alt="">
+                            {% endif %}
+                        </div>
+                        <div class="flex w-full h-24 px-5">
+                            <div class="absolute w-32 h-32 rounded-full -translate-y-1/2 bg-blue-500 border-4 border-white">
+                                <div class="absolute flex items-center justify-center w-full h-full rounded-full bg-slate-800/30">
+                                    <div class="flex flex-col items-center justify-center text-gray-100">
+                                        <label for="profile-picture" class="bg-neutral-800/50 text-lg rounded-full p-3 cursor-pointer">
+                                            <i class="fi fi-br-camera"></i>
+                                            <input id="profile-picture" name="profile_picture" type="file" class="hidden" />
+                                        </label>
+                                    </div>
+                                </div>
+                                {% if twitter_user.profile_picture %}
+                                    <img id="edit-profile-picture" class="w-full h-full object-cover rounded-full" src="{{ twitter_user.profile_picture.url }}" alt="">
+                                {% else %}
+                                    <img id="edit-profile-picture" class="hidden w-full h-full object-cover rounded-full" src="" alt="">
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="flex flex-col px-2">
+                    <div class="w-full p-2 overflow-hidden">
+                        <label for="username" class="block mb-2 text-sm font-medium text-gray-800 dark:text-white">
+                            {{context2.username}}
+                        </label>
+                        <input class="w-full text-sm rounded" type="text" name="username" id="username" value="{{ user.username }}">
+                    </div>
+                    <div class="w-full p-2 overflow-hidden">
+                        <label for="full-name" class="block mb-2 text-sm font-medium text-gray-800 dark:text-white">
+                            {{context2.name}}
+                        </label>
+                        <input class="w-full text-sm rounded" type="text" name="full-name" id="full-name" value="{{ user.get_full_name }}">
+                    </div>
+                    <div class="flex flex-col w-full p-2 overflow-hidden">
+                        <label for="description" class="block mb-2 text-sm font-medium text-gray-800 dark:text-white">{{context2.Description}}</label>
+                        <textarea id="description" name="description" rows="5" class="block p-2.5 w-full text-sm text-slate-800 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Write your thoughts here...">{{ twitter_user.description }}</textarea>
+                    </div>
+                </div>
+            </form>
+        </div>
+    {% endif %}
+    <div class="w-full max-w-3xl min-h-screen border-r">
+        <div class="flex items-center w-full sticky top-0 bg-white/85 z-50 px-5 py-1" style="backdrop-filter: blur(12px);">
+            <div class="">
+                <button onclick="window.history.back()" class="p-2.5 transition-colors rounded-full hover:bg-gray-100">
+                    <i class="fi fi-br-arrow-left"></i>
+                </button>
+            </div>
+            <div class="flex flex-col ml-5">
+                <h1 class="text-xl font-bold">{{ user.get_full_name }}</h1>
+                <p class="text-[13px] text-gray-500">{{ tweet_count }} {{context2.post}}</p>
+            </div>
+        </div>
+        <div>
+            <div class="w-full">
+                <div class="relative">
+                    <div class="bg-neutral-200 h-56">
+                        {% if twitter_user.banner_image %}
+                            <img class="w-full h-full object-cover" src="{{ twitter_user.banner_image.url }}" alt="">
+                        {% else %}
+                            <img class="hidden w-full h-full object-cover" src="" alt="">
+                        {% endif %}
+                    </div>
+                    <div class="flex w-full h-24 px-5">
+                        <div class="absolute w-36 h-36 rounded-full -translate-y-1/2 bg-white border-4 border-white">
+                            {% if twitter_user.profile_picture %}
+                                <img class="w-full h-full object-cover rounded-full" src="{{ twitter_user.profile_picture.url }}" alt="">
+                            {% else %}
+                                <img class="w-full h-full object-cover rounded-full bg-slate-50 p-5" src="{% static 'images/user_logo.png' %}" alt="">
+                            {% endif %}
+                        </div>
+                        <div class="flex items-center ml-auto">
+                            {% if user.username == username %}
+                                <div>
+                                    <button data-modal-open="crud-modal" class="flex items-center px-5 h-10 transition-colors rounded-3xl border hover:bg-gray-100 text-sm font-bold">
+                                        {{context2.edit_profile}}
+                                    </button>
+                                </div>
+                                <div class="ml-3">
+                                    <a href="{% url 'users:users_profile_click' %}" class="flex items-center justify-center w-10 h-10 transition-colors rounded-full border border-gray-300 hover:bg-gray-100 text-sm font-bold">
+                                        <i class="fi fi-br-settings"></i>
+                                    </a>
+                                </div>
+                            {% elif user.username in twitter_user.get_followers %}
+                                <button id="follow-button" data-operationid="unfollow" data-uid="{{ twitter_user.user.id }}" class="unfollow transition-colors flex items-center justify-center w-32 py-2.5 transition-colors rounded-3xl border mt-3 text-sm font-bold">
+                                    
+                                </button>
+                            {% elif user.username not in twitter_user.get_followers %}
+                                <button id="follow-button" data-operationid="follow" data-uid="{{ twitter_user.user.id }}" class="follow flex transition-colors items-center justify-center w-32 py-2.5 transition-colors rounded-3xl border mt-3 text-sm font-bold">
+                                    {{context2.follow}}
+                                </button>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="flex flex-col px-5">
+                <div>
+                    <h3 class="text-xl font-bold">{{ user.get_full_name }}</h3>
+                    <p class="text-[15px] text-gray-500">@{{ user.username }} </p>
+                </div>
+                <div class="mt-3">
+                    <p class="text-[15px] text-slate-800">{{ twitter_user.description }}</p>
+                </div>
+                <div class="flex items-center text-gray-500 mt-2">
+                    <div>
+                        <i class="fi fi-br-calendar-day"></i>
+                    </div>
+                    <div class="ml-2">
+                        <p class="text-[15px] mt-0.5">
+                            {{ user.date_joined|date:"F Y" }} {{context2.join_date}}
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="px-5">
+                <div class="flex items-center mt-2">
+                    <div class="flex items-center text-sm">
+                        <div class="flex items-center gap-x-1 mr-5">
+                            <p class="text-slate-800 font-bold">{{ twitter_user.get_followings|length }}</p>
+                            <p class="text-gray-500">{{context2.following}}</p>
+                        </div>
+                        <div class="flex items-center gap-x-1 mr-5">
+                            <p id="followers-count" class="text-slate-800 font-bold">{{ twitter_user.get_followers|length }}</p>
+                            <p class="text-gray-500">{{context2.followers}}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="flex items-center mt-5">
+            <div class="px-3 transition-colors hover:bg-gray-200">
+                <div aria-selected="true" class="border-b-4 border-transparent aria-selected:border-blue-500">
+                    <button aria-selected="true" class="text-gray-500 aria-selected:text-slate-800 text-sm font-bold px-5 py-3">{{context2.posts}}</button>
+                </div>
+            </div>
+            <div class="px-3 transition-colors hover:bg-gray-200">
+                <div aria-selected="false" class="border-b-4 border-transparent aria-selected:border-blue-500">
+                    <button aria-selected="false" class="text-gray-500 aria-selected:text-slate-800 text-sm font-bold px-5 py-3">{{context2.replies}}</button>
+                </div>
+            </div>
+            <div class="px-3 transition-colors hover:bg-gray-200">
+                <div aria-selected="false" class="border-b-4 border-transparent aria-selected:border-blue-500">
+                    <button aria-selected="false" class="text-gray-500 aria-selected:text-slate-800 text-sm font-bold px-5 py-3">{{context2.like}}</button>
+                </div>
+            </div>
+        </div>
+        <div class="flex flex-col pb-80">
+            {% for tweet in tweets %}
+                <div class="tweet p-5 flex w-full gap-x-2 w-full border-t transition-colors hover:bg-gray-100 cursor-pointer">
+                    <div class="w-10 h-10 rounded-full">
+                        {% if tweet.user.profile_picture %}
+                            <img class="w-full h-full object-cover rounded-full" src="{{ tweet.user.profile_picture.url }}" alt="">
+                        {% else %}
+                            <img class="w-full h-full object-cover rounded-full bg-slate-50 p-1" src="{% static 'images/user_logo.png' %}" alt="">
+                        {% endif %}
+                    </div>
+                    <div class="flex flex-col w-full text-[15px]">
+                        <div class="flex items-center text-gray-500 w-full relative">
+                            <div class="flex items-center">
+                                <p class="text-slate-800 font-bold">{{ tweet.user.user.get_full_name }}</p>
+                                <p class="ml-1">@{{ tweet.user.user.username }}</p>
+                                <span class="mx-1">·</span>
+                                <p class="font-medium">{{ tweet.created_at|date:"d F Y" }}</p>
+                            </div>
+                            <div class="absolute right-0">
+                                <button class="p-2.5 transition-colors rounded-full text-slate-500 hover:text-[#1d9bf0] hover:bg-[#e1eef6]">
+                                    <i class="fi fi-br-menu-dots"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="text-slate-800">
+                            {{ tweet.content|safe }}
+                        </div>
+                        {% if tweet.images %}
+                            {% with images_length=tweet.get_images|length %}
+                                {% with result=images_length|divisibleby:2 %}
+                                    <div class="w-full grid-rows-{{ result }} grid grid-cols-2 gap-5 my-3">
+                                        {% for image in tweet.get_images %}
+                                            <img class="w-full h-full object-cover" src="{{ image }}" alt="">
+                                        {% endfor %}
+                                    </div>
+                                {% endwith %}
+                            {% endwith %}
+                        {% endif %}
+                        <div class="flex items-center justify-between mt-2 w-2/3 -translate-x-2.5">
+                            <div class="text-gray-500">
+                                <button class="rounded-full flex items-center p-2.5 hover:text-[#1d9bf0] hover:bg-[#e1eef6] relative">
+                                    <i class="fi fi-br-comments"></i>
+                                    <p class="text-[13px] absolute left-8">{{ tweet.get_comments_count }}</p>
+                                </button>
+                            </div>
+                            <div class="text-gray-500">
+                                <button class="rounded-full flex items-center p-2.5 hover:text-[#00ba7c] hover:bg-[#def1eb] relative">
+                                    <i class="fi fi-br-arrows-retweet"></i>
+                                    <p class="text-[13px] absolute left-8">0</p>
+                                </button>
+                            </div>
+                            <div class="text-gray-500">
+                                {% if twitter_user in tweet.likes.all %}
+                                    <button data-operationid="like" data-tweetid="{{ tweet.id }}" class="rounded-full flex items-center p-2.5 text-[#f91880] hover:text-[#f91880] hover:bg-[#f7e0eb] relative">
+                                        <i class="fi fi-br-heart"></i>
+                                        <p class="text-[13px] absolute left-8">{{ tweet.get_likes }}</p>
+                                    </button>
+                                {% else %}
+                                    <button data-operationid="like" data-tweetid="{{ tweet.id }}" class="rounded-full flex items-center p-2.5 hover:text-[#f91880] hover:bg-[#f7e0eb] relative">
+                                        <i class="fi fi-br-heart"></i>
+                                        <p class="text-[13px] absolute left-8">{{ tweet.get_likes }}</p>
+                                    </button>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+    {% block scripts %}
+        <script src="{% static 'scripts/tweet_operations.js' %}"></script>
+        {% if user.username == username %}
+            <script>
+                var modalClose = document.querySelector('[data-modal-close="crud-modal"]');
+                var modalOpen = document.querySelector('[data-modal-open="crud-modal"]');
+                var editor = document.getElementById('editor');
+
+                modalClose.addEventListener('click', function() {
+                    editor.classList.add('hidden');
+                    document.body.style.overflow = 'auto';
+                });
+
+                modalOpen.addEventListener('click', function() {
+                    editor.classList.remove('hidden');
+                    document.body.style.overflow = 'hidden';
+                });
+
+                var profilePicture = document.getElementById('profile-picture');
+                var bannerImage = document.getElementById('banner-image');
+
+                profilePicture.addEventListener('change', function() {
+                    let file = this.files[0];
+                    let reader = new FileReader();
+
+                    reader.onload = function(e) {
+                        let image = document.getElementById('edit-profile-picture');
+                        
+                        image.src = e.target.result;
+                        image.classList.remove('hidden');
+                    }
+
+                    reader.readAsDataURL(file);
+                });
+
+                bannerImage.addEventListener('change', function() {
+                    let file = this.files[0];
+                    let reader = new FileReader();
+
+                    reader.onload = function(e) {
+                        let image = document.getElementById('edit-banner-image');
+                        
+                        image.src = e.target.result;
+                        image.classList.remove('hidden');
+                    }
+
+                    reader.readAsDataURL(file);
+                });
+            </script>
+        {% endif %}
+    {% endblock %}
+{% endblock %}
