@@ -63,9 +63,7 @@ url: https://127.0.0.1:8000
 
 * Login, Register, Logout
 
-<video autoplay mute>
-    <source src="./videos/login.mp4" type="video/mp4">
-</video>
+[![Login]](https://github.com/Bakwein/web_proje/assets/101413263/66211506-6121-462c-8b7b-64383d38bc2a)
 
 * Login / Register with Google OAuth2.0
 
