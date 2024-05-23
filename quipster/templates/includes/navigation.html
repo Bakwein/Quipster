@@ -22,10 +22,15 @@
                 </a>
             </div>
             <div>
-                <a href="#" class="inline-block rounded-full p-3 hover:bg-gray-100">
+                <a href="{% url 'posts:explore' %}" class="inline-block rounded-full p-3 hover:bg-gray-100">
                     <div class="flex items-center">
-                        <i class="text-2xl text-[#223843] fi fi-br-search"></i>
-                        <span class="ml-5 mt-1 text-[#223843]">{{ context2.explore }}</span>
+                        {% if request.resolver_match.url_name == 'explore' %}
+                            <i class="text-2xl text-[#223843] fi fi-sr-search"></i>
+                            <span class="ml-5 mt-1 text-[#223843] font-bold">{{ context2.explore }}</span>
+                        {% else %}
+                            <i class="text-2xl text-[#223843] fi fi-br-search"></i>
+                            <span class="ml-5 mt-1 text-[#223843]">{{ context2.explore }}</span>
+                        {% endif %}
                     </div>
                 </a>
             </div>

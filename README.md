@@ -1,4 +1,3 @@
-
 Aşağıdaki alanda ilgili özelliğin sorumlusunu tabloda yazınız.  Projenizi amacını ve işlevlerinin kısa özetini yazınız. Talep edilen özelliklerin projeniz içerisinde nasıl uygulanacağını kısaca açıklayınız.
 
 |No|Tech|Öğrenci No / Ad  Soyad|
@@ -34,4 +33,38 @@ Django , Html+Css+Javascript + Tailwind CSS , veri tabanı ve çeşitli api ve 3
 1. Web Security Implementation: Django Crsf, vb. SQL injection,Xss atakları engelleme
 1. Cloud Service (AI) Using: Cümle Önerisi(Sentence Suggestion)
 
+## Environment file
+
+name: .env
+position: ./quipster/quipster
+
+env file:
+```
+SECRET_KEY=
+DEBUG=
+SOCIAL_AUTH_GOOGLE_OAUTH2_KEY=
+SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET=
+```
+
+Env dosyası size iletilen github linki ile paylaşılmıştır.
+
+## Features
+
+* Login, Register, Logout
+* Login / Register with Google OAuth2.0
+
+* Share a tweet with photo (photo is optional)
+
+* Tweet content correction with AI
+* Like and unlike to tweet
+* Reply to tweet
+
+* Profile (Profile edit, follow, unfollow)
+
+* Multiple languages support with cookies
+
+* Explore page (You can find random users)
+
+### Security
+* HTTPS support, XSS attacks protection, SQL Injection protection, CSRF Protection, Clickjacking protection
 

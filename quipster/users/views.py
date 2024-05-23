@@ -9,6 +9,7 @@ from .models import TwitterUser
 from posts.models import Tweet
 from .forms import TwitterUserForm
 from .langs import context2
+from posts.langs import context
 
 from django.conf import settings
 import os
@@ -142,7 +143,6 @@ def render_logout(request: WSGIRequest):
     return redirect('users:login')
 
 def profile(request: WSGIRequest, username: str):
-    
     #cookie
     if "user_language" in request.COOKIES:
         language = request.COOKIES["user_language"]
@@ -152,7 +152,7 @@ def profile(request: WSGIRequest, username: str):
     else:
         language = "en"
 
-    language_context = context2[language]
+    language_context = {**context2[language], **context[language]}
 
     if request.user.is_authenticated is False:
         return redirect('users:login')
@@ -168,17 +168,20 @@ def profile(request: WSGIRequest, username: str):
     twitter_user = TwitterUser.objects.get(user=user)
     tweets = Tweet.objects.filter(user=twitter_user).order_by('-created_at')
 
+    current_user = request.user
+    current_twitter_user = TwitterUser.objects.get(user=current_user)
+
     tweet_count = Tweet.get_tweets_count(user=twitter_user)
 
-    context = {
-        'twitter_user': twitter_user,
+    context3 = {
+        'twitter_user': current_twitter_user,
         'tweets': tweets,
         'username': username,
         "context2": language_context,
         'tweet_count': tweet_count
     }
 
-    return render(request, 'users/profile.html', context) 
+    return render(request, 'users/profile.html', context3) 
 
 def edit_profile(request: WSGIRequest):
     user = request.user

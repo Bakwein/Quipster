@@ -100,3 +100,34 @@ def oauth_login(request: WSGIRequest):
     twitter_user = TwitterUser.objects.get(user=existed_user)
 
     return render(request, 'pages/index.html', {'twitter_user': twitter_user})
+
+def explore(request: WSGIRequest):
+    current_user = request.user
+    current_twitter_user = TwitterUser.objects.get(user=current_user)
+
+    users = User.objects.exclude(username=current_user.username).order_by("?")[:10]
+
+    all_tweets = []
+    
+    for user in users:
+        try:
+            twitter_user = TwitterUser.objects.get(user=user)
+        except:
+            continue
+
+        tweet = Tweet.objects.filter(user=twitter_user).order_by("-created_at").first()
+
+        if tweet is not None:
+            all_tweets.append(tweet)
+
+    if "user_language" in request.COOKIES:
+        language = request.COOKIES["user_language"]
+
+        if language not in ["tr", "en", "de"]:
+            language = "en"
+    else:
+        language = "en"
+
+    language_context = context[language]
+
+    return render(request, "pages/explore.html", {"twitter_user": current_twitter_user, "tweets": all_tweets, "context2": language_context})
