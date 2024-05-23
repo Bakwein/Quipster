@@ -1,3 +1,5 @@
+
+https://github.com/Bakwein/web_proje/assets/88441975/b1a2ebd2-ee8a-4cd5-8f27-202515f1d68e
 Aşağıdaki alanda ilgili özelliğin sorumlusunu tabloda yazınız.  Projenizi amacını ve işlevlerinin kısa özetini yazınız. Talep edilen özelliklerin projeniz içerisinde nasıl uygulanacağını kısaca açıklayınız.
 
 |No|Tech|Öğrenci No / Ad  Soyad|
@@ -63,21 +65,50 @@ url: https://127.0.0.1:8000
 
 * Login, Register, Logout
 
-[![Login]](https://github.com/Bakwein/web_proje/assets/101413263/66211506-6121-462c-8b7b-64383d38bc2a)
+[![Login]](https://github.com/Bakwein/web_proje/assets/88441975/69abc950-a5c3-400d-8eb2-3bc50703ad67)
+
 
 * Login / Register with Google OAuth2.0
 
+[![Google Oauth2]](https://github.com/Bakwein/web_proje/assets/88441975/5729914c-ca9b-4cd2-9490-39e5fedb4c3e)
+
+
 * Share a tweet with photo (photo is optional)
+<img width="1552" alt="Ekran Resmi 2024-05-23 19 17 05" src="https://github.com/Bakwein/web_proje/assets/88441975/91ca8d91-d1dd-4e40-86ef-88beaeb1a1e6">
+
 
 * Tweet content correction with AI
-* Like and unlike to tweet
+
+https://github.com/Bakwein/web_proje/assets/88441975/736c651b-4bcd-4cf9-8920-ee03fc7ef18a
+
+* Explore page (You can find random users)
+* Like and unlike to tweet, Follow, Unfollow
+
+https://github.com/Bakwein/web_proje/assets/88441975/14979c53-0209-429c-9a22-99fab42125b7
+
+
 * Reply to tweet
 
-* Profile (Profile edit, follow, unfollow)
+
+https://github.com/Bakwein/web_proje/assets/88441975/8927d519-c35b-4f2b-a157-8d51d9c2e192
+
+
+
+* Profile (Profile edit)
+  
+[![Profile Edit]](https://github.com/Bakwein/web_proje/assets/88441975/d2c9f176-eb2f-48c9-bac4-eb7e3ee9d702)
+
 
 * Multiple languages support with cookies
 
-* Explore page (You can find random users)
+
+
+https://github.com/Bakwein/web_proje/assets/88441975/97c25247-c459-4b7a-a5fa-a31db68b75a5
+
+
+
+
+
 
 ### Security
 * HTTPS support, XSS attacks protection, SQL Injection protection, CSRF Protection, Clickjacking protection
