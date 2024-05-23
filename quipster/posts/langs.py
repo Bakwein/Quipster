@@ -22,6 +22,8 @@ context = {
         'Set_location': 'Set location',
         'Upload_image': 'Upload image',
         'loading':'Loading',
+        # explore
+        "do_you_know": "People you might know"
 
     },
     'tr':{
@@ -46,6 +48,8 @@ context = {
         'Set_location': 'Konum Belirle',
         'Upload_image': 'Resim Yükle',
         'loading': 'Yükleniyor',
+        # explore
+        "do_you_know": "Tanıyor olabileceğin kişiler"
     },
     'de': {
         'for_you': 'Für dich',
@@ -69,5 +73,7 @@ context = {
         'Set_location': 'Ort festlegen',
         'Upload_image': 'Bild hochladen',
         'loading': 'Laden',
+        # explore
+        "do_you_know": "Menschen, die Sie kennen könnten"
     }
 }

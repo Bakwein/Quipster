@@ -1,0 +1,104 @@
+{% extends "layout.html" %}
+
+{% load static %}
+
+{% block title %} Explore / Quipster {% endblock %}
+
+{% block head %}
+    <style>
+        .active-btn {
+            font-weight: bolder !important;
+            color: rgb(38 38 38) !important;
+        }
+        .active-btn div {
+            border-color: rgb(59 130 246);
+        }
+    </style>
+    <script>
+        var csrfToken = "{{ csrf_token }}"
+    </script>
+{% endblock %}
+
+{% block content %}
+    <div class="flex flex-col flex-none w-full max-w-2xl min-h-screen border-r">
+        <div class="flex items-center">
+            <div class="flex-1">
+                <button class="active-btn flex items-center justify-center w-full h-[53px] text-[#536471] font-medium transition-colors hover:bg-gray-100">
+                    <div class="flex items-center justify-center w-fit h-full border-b-4 border-transparent">
+                        {{ context2.do_you_know }}
+                    </div>
+                </button>
+            </div>
+        </div>
+        {% for tweet in tweets %}
+            <div data-operationid="details" data-url="{% url 'posts:post-details' tweet.id %}" class="tweet p-5 flex w-full gap-x-2 w-full border-t transition-colors hover:bg-gray-100 cursor-pointer">
+                <a href="{% url 'users:profile' tweet.user.user.username %}" class="w-10 h-10 rounded-full">
+                    {% if tweet.user.profile_picture %}
+                        <img class="w-full h-full object-cover rounded-full" src="{{ tweet.user.profile_picture.url }}" alt="">
+                    {% else %}
+                        <img class="w-full h-full object-cover rounded-full bg-slate-50 p-1" src="{% static 'images/user_logo.png' %}" alt="">
+                    {% endif %}
+                </a>
+                <div class="flex flex-col w-full text-[15px]">
+                    <a href="{% url 'users:profile' tweet.user.user.username %}" class="flex items-center text-gray-500 w-full relative">
+                        <div class="flex items-center">
+                            <p class="text-slate-800 font-bold">{{ tweet.user.user.get_full_name }}</p>
+                            <p class="ml-1">@{{ tweet.user.user.username }}</p>
+                            <span class="mx-1">·</span>
+                            <p class="font-medium">{{ tweet.created_at|date:"d F Y" }}</p>
+                        </div>
+                        <div class="absolute right-0">
+                            <button class="p-2.5 transition-colors rounded-full text-slate-500 hover:text-[#1d9bf0] hover:bg-[#e1eef6]">
+                                <i class="fi fi-br-menu-dots"></i>
+                            </button>
+                        </div>
+                    </a>
+                    <div class="text-slate-800">
+                        {{ tweet.content|safe }}
+                    </div>
+                    {% if tweet.images %}
+                        {% with images_length=tweet.get_images|length %}
+                            {% with result=images_length|divisibleby:2 %}
+                                <div class="w-full grid-rows-{{ result }} grid grid-cols-2 gap-5 my-3">
+                                    {% for image in tweet.get_images %}
+                                        <img class="w-full h-full object-cover" src="{{ image }}" alt="">
+                                    {% endfor %}
+                                </div>
+                            {% endwith %}
+                        {% endwith %}
+                    {% endif %}
+                    <div class="flex items-center justify-between mt-2 w-2/3 -translate-x-2.5">
+                        <div class="text-gray-500">
+                            <button class="rounded-full flex items-center p-2.5 hover:text-[#1d9bf0] hover:bg-[#e1eef6] relative">
+                                <i class="fi fi-br-comments"></i>
+                                <p class="text-[13px] absolute left-8">{{ tweet.get_comments_count }}</p>
+                            </button>
+                        </div>
+                        <div class="text-gray-500">
+                            <button class="rounded-full flex items-center p-2.5 hover:text-[#00ba7c] hover:bg-[#def1eb] relative">
+                                <i class="fi fi-br-arrows-retweet"></i>
+                                <p class="text-[13px] absolute left-8">0</p>
+                            </button>
+                        </div>
+                        <div class="text-gray-500">
+                            {% if twitter_user in tweet.likes.all %}
+                                <button data-operationid="like" data-tweetid="{{ tweet.id }}" class="rounded-full flex items-center p-2.5 text-[#f91880] hover:text-[#f91880] hover:bg-[#f7e0eb] relative">
+                                    <i class="fi fi-br-heart"></i>
+                                    <p class="text-[13px] absolute left-8">{{ tweet.get_likes }}</p>
+                                </button>
+                            {% else %}
+                                <button data-operationid="like" data-tweetid="{{ tweet.id }}" class="rounded-full flex items-center p-2.5 hover:text-[#f91880] hover:bg-[#f7e0eb] relative">
+                                    <i class="fi fi-br-heart"></i>
+                                    <p class="text-[13px] absolute left-8">{{ tweet.get_likes }}</p>
+                                </button>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}
+{% block scripts %}
+    <script src="{% static 'scripts/tweet_operations.js' %}"></script>
+{% endblock %}

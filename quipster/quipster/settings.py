@@ -76,7 +76,7 @@ MIDDLEWARE = [
 # #Cookies
 # SESSION_COOKIE_SECURE = True #Marks the cookie as secure, meaning it will only be sent over HTTPS.
 # CSRF_COOKIE_SECURE = True #Marks the CSRF cookie as secure, meaning it will only be sent over HTTPS.
-# #SESSION_EXPIRE_AT_BROWSER_CLOSE = True #Expires the session when the user closes their browser.
+# SESSION_EXPIRE_AT_BROWSER_CLOSE = True #Expires the session when the user closes their browser.
 # SESSION_COOKIE_HTTPONLY = True #Marks the cookie as HTTP-only, meaning that the cookie cannot be accessed by JavaScript.
 
 
