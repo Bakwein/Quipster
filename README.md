@@ -48,9 +48,25 @@ SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET=
 
 Env dosyası size iletilen github linki ile paylaşılmıştır.
 
+## Start server
+
+```
+cd quipster/
+docker-compose up --build
+
+url: https://127.0.0.1:8000
+```
+
+⚡Recommended to run in chrome or brave browsers' latest versions⚡
+
 ## Features
 
 * Login, Register, Logout
+
+<video autoplay mute>
+    <source src="./videos/login.mp4" type="video/mp4">
+</video>
+
 * Login / Register with Google OAuth2.0
 
 * Share a tweet with photo (photo is optional)
@@ -67,4 +83,3 @@ Env dosyası size iletilen github linki ile paylaşılmıştır.
 
 ### Security
 * HTTPS support, XSS attacks protection, SQL Injection protection, CSRF Protection, Clickjacking protection
-
