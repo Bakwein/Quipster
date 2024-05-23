@@ -60,29 +60,29 @@ MIDDLEWARE = [
     'social_django.middleware.SocialAuthExceptionMiddleware',
 ]
 
-# SECURE_CONTENT_TYPE_NOSNIFF = True #Protects against MIME type sniffing attacks by enabling the header X-Content-Type-Options: nosniff.
-# SECURE_BROWSER_XSS_FILTER = True #Enables the XSS (Cross-Site Scripting) filter built into most recent web browsers.
+SECURE_CONTENT_TYPE_NOSNIFF = True #Protects against MIME type sniffing attacks by enabling the header X-Content-Type-Options: nosniff.
+SECURE_BROWSER_XSS_FILTER = True #Enables the XSS (Cross-Site Scripting) filter built into most recent web browsers.
 
-# '''
-# SECURE_HSTS_SECONDS = 86400 #Enables the HTTP Strict Transport Security (HSTS) header with the specified number of seconds.
-# SECURE_HSTS_PRELOAD = True #Enables the HSTS preload list, which is a list of sites that are hardcoded into the browser as being HTTPS only.
-# SECURE_HSTS_INCLUDE_SUBDOMAINS = True #Includes all subdomains of the site in the HSTS policy.
-# '''
+'''
+SECURE_HSTS_SECONDS = 86400 #Enables the HTTP Strict Transport Security (HSTS) header with the specified number of seconds.
+SECURE_HSTS_PRELOAD = True #Enables the HSTS preload list, which is a list of sites that are hardcoded into the browser as being HTTPS only.
+SECURE_HSTS_INCLUDE_SUBDOMAINS = True #Includes all subdomains of the site in the HSTS policy.
+'''
 
-# X_FRAME_OPTIONS = 'DENY' #Prevents clickjacking attacks by ensuring that their content is not embedded into other sites.
-# X_CONTENT_TYPE_OPTIONS = 'nosniff' #Prevents MIME type sniffing attacks by ensuring that the MIME type of the response matches the Content-Type header.
-
-
-# #Cookies
-# SESSION_COOKIE_SECURE = True #Marks the cookie as secure, meaning it will only be sent over HTTPS.
-# CSRF_COOKIE_SECURE = True #Marks the CSRF cookie as secure, meaning it will only be sent over HTTPS.
-# SESSION_EXPIRE_AT_BROWSER_CLOSE = True #Expires the session when the user closes their browser.
-# SESSION_COOKIE_HTTPONLY = True #Marks the cookie as HTTP-only, meaning that the cookie cannot be accessed by JavaScript.
+X_FRAME_OPTIONS = 'DENY' #Prevents clickjacking attacks by ensuring that their content is not embedded into other sites.
+X_CONTENT_TYPE_OPTIONS = 'nosniff' #Prevents MIME type sniffing attacks by ensuring that the MIME type of the response matches the Content-Type header.
 
 
+#Cookies
+SESSION_COOKIE_SECURE = True #Marks the cookie as secure, meaning it will only be sent over HTTPS.
+CSRF_COOKIE_SECURE = True #Marks the CSRF cookie as secure, meaning it will only be sent over HTTPS.
+SESSION_EXPIRE_AT_BROWSER_CLOSE = True #Expires the session when the user closes their browser.
+SESSION_COOKIE_HTTPONLY = True #Marks the cookie as HTTP-only, meaning that the cookie cannot be accessed by JavaScript.
 
-# SECURE_SSL_REDIRECT = True #Redirects all non-HTTPS requests to HTTPS.
-# SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https') #A tuple representing a HTTP header/value combination that signifies a request is secure.
+
+
+SECURE_SSL_REDIRECT = True #Redirects all non-HTTPS requests to HTTPS.
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https') #A tuple representing a HTTP header/value combination that signifies a request is secure.
 
 
 ROOT_URLCONF = 'quipster.urls'
