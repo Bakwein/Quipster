@@ -162,7 +162,7 @@ def artifical_text(request):
         data = json.loads(request.body)
         text=data["text"]
         suggestion=generate_sentencefonk(text)
-        print(f"suggestion{suggestion}")   
+        #print(f"suggestion{suggestion}")   
 
         # İki yıldız arasındaki karakterleri almak için regex deseni
         pattern = r'\*\*(.*?)\*\*'
@@ -171,7 +171,7 @@ def artifical_text(request):
         matches = re.match(pattern, suggestion)
 
         
-        print(matches.group(1))
+        #print(matches.group(1))
         suggestion=matches.group(1)
 
 

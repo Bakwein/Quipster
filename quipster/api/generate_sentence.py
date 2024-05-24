@@ -38,7 +38,7 @@ model = genai.GenerativeModel(
 
 def generate_sentencefonk(sentence):
   response = model.generate_content(f"{sentence}")
-  print(response.text)
+  #print(response.text)
   return response.text#cümlenin sonu tahmini
 
 generate_sentencefonk("aliye geldi")
