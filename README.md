@@ -1,5 +1,5 @@
+# Quipster - Twitter Clone with Django 
 
-https://github.com/Bakwein/web_proje/assets/88441975/b1a2ebd2-ee8a-4cd5-8f27-202515f1d68e
 Aşağıdaki alanda ilgili özelliğin sorumlusunu tabloda yazınız.  Projenizi amacını ve işlevlerinin kısa özetini yazınız. Talep edilen özelliklerin projeniz içerisinde nasıl uygulanacağını kısaca açıklayınız.
 
 |No|Tech|Öğrenci No / Ad  Soyad|
