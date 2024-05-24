@@ -114,7 +114,7 @@
                 </button>
             </div>
             <div class="flex flex-col ml-5">
-                <h1 class="text-xl font-bold">{{ user.get_full_name }}</h1>
+                <h1 class="text-xl font-bold">{{ twitter_user.user.get_full_name }}</h1>
                 <p class="text-[13px] text-gray-500">{{ tweet_count }} {{context2.post}}</p>
             </div>
         </div>
@@ -163,8 +163,8 @@
             </div>
             <div class="flex flex-col px-5">
                 <div>
-                    <h3 class="text-xl font-bold">{{ user.get_full_name }}</h3>
-                    <p class="text-[15px] text-gray-500">@{{ user.username }} </p>
+                    <h3 class="text-xl font-bold">{{ twitter_user.user.get_full_name }}</h3>
+                    <p class="text-[15px] text-gray-500">@{{ twitter_user.user.username }} </p>
                 </div>
                 <div class="mt-3">
                     <p class="text-[15px] text-slate-800">{{ twitter_user.description }}</p>
@@ -175,7 +175,7 @@
                     </div>
                     <div class="ml-2">
                         <p class="text-[15px] mt-0.5">
-                            {{ user.date_joined|date:"F Y" }} {{context2.join_date}}
+                            {{ twitter_user.user.date_joined|date:"F Y" }} {{context2.join_date}}
                         </p>
                     </div>
                 </div>
@@ -264,7 +264,7 @@
                                 </button>
                             </div>
                             <div class="text-gray-500">
-                                {% if twitter_user in tweet.likes.all %}
+                                {% if current_user in tweet.likes.all %}
                                     <button data-operationid="like" data-tweetid="{{ tweet.id }}" class="rounded-full flex items-center p-2.5 text-[#f91880] hover:text-[#f91880] hover:bg-[#f7e0eb] relative">
                                         <i class="fi fi-br-heart"></i>
                                         <p class="text-[13px] absolute left-8">{{ tweet.get_likes }}</p>

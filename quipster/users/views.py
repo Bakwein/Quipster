@@ -174,7 +174,8 @@ def profile(request: WSGIRequest, username: str):
     tweet_count = Tweet.get_tweets_count(user=twitter_user)
 
     context3 = {
-        'twitter_user': current_twitter_user,
+        'twitter_user': twitter_user,
+        'current_user': current_twitter_user,
         'tweets': tweets,
         'username': username,
         "context2": language_context,
